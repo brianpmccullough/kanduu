@@ -1,0 +1,11 @@
+node_modules/
+dist/
+lib/
+temp/
+release/
+sharepoint/
+*.log
+.DS_Store
+.rushstack/
+.heft/
+coverage/

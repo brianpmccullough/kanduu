@@ -1,0 +1,20 @@
+{
+  "@microsoft/generator-sharepoint": {
+    "useGulp": false,
+    "plusBeta": false,
+    "isCreatingSolution": true,
+    "nodeVersion": "22.22.3",
+    "sdksVersions": {},
+    "version": "1.23.0",
+    "libraryName": "customizers-global",
+    "libraryId": "8d83bfb6-1cea-45d0-bff6-6967a055fc36",
+    "environment": "spo",
+    "packageManager": "npm",
+    "solutionName": "customizers-global",
+    "solutionShortDescription": "customizers-global description",
+    "skipFeatureDeployment": true,
+    "isDomainIsolated": false,
+    "componentType": "extension",
+    "extensionType": "ApplicationCustomizer"
+  }
+}
