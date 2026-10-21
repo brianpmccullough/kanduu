@@ -2,14 +2,14 @@
   "name": "kanduu-digital-workplace",
   "version": "0.1.0",
   "private": true,
-  "description": "M365 extensibility for kanduu ditial workplace.",
+  "description": "M365 extensibility for kanduu digital workplace.",
   "workspaces": [
     "spfx/*"
   ],
   "scripts": {
     "build": "npm run shared:build && npm run build --workspaces --if-present",
     "clean": "npm run clean --workspaces --if-present",
-    "clean:node": "rm -rf node_modules packages/*/node_modules",
+    "clean:node": "rm -rf node_modules spfx/*/node_modules",
     "lint": "npm run lint --workspaces --if-present",
     "test": "npm run test --workspaces --if-present",
 
