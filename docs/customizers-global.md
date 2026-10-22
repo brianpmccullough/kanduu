@@ -83,8 +83,8 @@ Sample intranet commands, defined in `defaultHeaderCommands.ts`.  Except for Our
 | --- | --- |
 | I want to... | **Pay and time off**: get my pay slip, request time off, submit an expense report, update my personal details.  **Workplace**: book a meeting room, book travel, find a colleague.  **Get help**: report an IT issue, ask HR a question. |
 | Departments | Human Resources, Finance, IT, Facilities |
-| News | A single link |
 | Our brands | A submenu per brand (Microsoft, Xbox, LinkedIn, Microsoft 365, Azure, Copilot).  Each lists the brand's social accounts under the brand name (LinkedIn, YouTube, Facebook, Instagram, X), then its public website.  Placeholders for the company's own brands; links open in a new tab. |
+| News | A single link |
 
 To add or change commands, edit `defaultHeaderCommands.ts` (text from `loc/` strings, icons from [Fluent UI MDL2 icons](https://developer.microsoft.com/en-us/fluentui#/styles/web/icons)).  A command with `sections` becomes a menu; each section is a group of links with an optional heading.  A link can have `sections` too, which makes it a nested submenu.  Add a brand with the `brand()` helper; networks without an account are left out.  A link with an `href` navigates; `openInNewTab` opens it in a new tab (`rel="noopener noreferrer"`).  Items are styled with the banner's theme colors; their menus use the site theme.
 
