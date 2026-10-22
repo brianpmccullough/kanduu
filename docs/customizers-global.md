@@ -30,7 +30,7 @@ Renders a banner in the page's **Top** placeholder, colored with the site's prim
 | `components/ProfileCard.tsx` | Popup contents: the user's name and email, and their links |
 | `components/sampleUserLinks.ts` | Sample "My links" until users can personalize them |
 
-Layout: commands (`CommandBar`) on the left, then on the right a stock ticker, a search box, a settings (gear) button and the profile.  The search box and gear are stubs with no behavior yet.  The ticker is hidden below 640px; commands that don't fit move to the CommandBar's overflow ("More commands") menu.
+Layout: commands (`CommandBar`) on the left, then on the right a stock ticker, a search box, the profile and a settings (gear) button.  The search box and gear are stubs with no behavior yet; the gear sits last so it can later be shown only to site owners or admins without shifting the other items.  The ticker is hidden below 640px; commands that don't fit move to the CommandBar's overflow ("More commands") menu.
 
 ### Properties
 
