@@ -14,9 +14,9 @@ This is an npm workspace monorepo ([npm workspaces](https://docs.npmjs.com/cli/v
 
 /scripts - PnP.PowerShell provisioning scripts (e.g. `Set-ApplicationCustomizer.ps1`, `Set-StockTickerList.ps1`) and their per-site JSON configurations in `/scripts/config`.  Extensions are activated with these scripts, not SPFx feature XML.
 
-/docs - contains reference documents for both humans and agents.  These should be updated as the solution(s) grow.
+/workers - background jobs: small, host-agnostic Node.js / TypeScript apps (e.g. `stock-quote`, which refreshes the Stock Ticker list).  Run locally or in Azure Functions / AWS Lambda.  See /docs/workers.md.
 
-There are no backend components here at this time.
+/docs - contains reference documents for both humans and agents.  These should be updated as the solution(s) grow.
 
 ## SPFx Tech Stack
 
@@ -34,6 +34,14 @@ There are no backend components here at this time.
 - Extensions are activated per site by scripts in `/scripts` with JSON configurations in `/scripts/config`, NOT by SPFx feature XML (`sharepoint/assets/*.xml`, `features` in package-solution.json).  See /docs/application-customizers.md.
 - Scripts can be re-run safely (remove existing, then re-add), support `-WhatIf`, and declare their requirements with `#Requires`.
 
+## Workers Tech Stack
+
+- Node >=22.14.0 <23.0.0, TypeScript, Jest (same versions as the SPFx packages)
+- Built-in `fetch` / `node:` modules; npm dependencies only from /docs/dependencies.md
+- Host-agnostic: logic behind interfaces in `src/core`, one `runXxx(env, logger)` entry, thin hosts in `src/hosts`
+- Configuration only from environment variables, documented in `.env.example`.  Never commit secrets or `.env`.
+- Microsoft 365 access is app-only Microsoft Graph with `Sites.Selected` (least privilege)
+
 ## Commands (run from repo root)
 
 - `npm run build` - build shared, then every SPFx package (production build; runs Jest tests via `heft test`)
@@ -41,6 +49,7 @@ There are no backend components here at this time.
 - `npm run <package>:start` - build shared + serve one package locally
 - `npm run <package>:clean` - clean one package
 - `npm run shared:test` - run the `spfx/shared` Jest tests (also run by every build)
+- `npm run <worker>:once` / `npm run <worker>:start` - build a worker and run it once / on its interval (e.g. `stock-quote:once`)
 
 ## Adding a new SPFx package
 
@@ -68,13 +77,14 @@ There are no backend components here at this time.
 ## SPFx guardrails (must adhere)
 
 1. DO NOT introduce dependency changes without human / team vetting and approval.  Only packages listed in /docs/dependencies.md may be added; installing a listed package (and updating its "Installed in" column) is allowed.
-2. DO NOT use Microsoft Graph Toolkit (MGT) - it has been deprecated.
-3. DO NOT introduce custom UI frameworks (e.g. tailwind, material, etc)
-4. DO use Fluent UI v8 (`@fluentui/react`) + SCSS modules.
-5. DO use React 17 (until SPFx 1.24, then, and only after then, can React 18 be used).  Any candidate dependencies (react-router, etc) MUST be compatible with the version of React used.
-6. DO use localization strings for ANY/EVERY piece of text a user might see.
-7. DO use SPFx Theming; DO NOT use custom colors/fonts (these are available through themes)
-8. DO follow SOLID and DRY principles and use established software patterns where appropriate.
-9. DO separate concerns and build appropriate structure to support testability and modularity.  For example data/api access sits behind a Service with appropriate interface.
-10. DO keep logic minimal in EXTENSION.ts files (e.g. ____WebPart.ts and _____ApplicationCustomizer.ts).  Retrieve what's needed, build services as needed, and move to straight TypeScript and/or React as appropriate.
-11. DO build accessible UI: prefer Fluent UI controls, support keyboard navigation, and provide ARIA labels.
+2. DO NOT update package-lock.json manually.  npm installs should do the updating.
+3. DO NOT use Microsoft Graph Toolkit (MGT) - it has been deprecated.
+4. DO NOT introduce custom UI frameworks (e.g. tailwind, material, etc)
+5. DO use Fluent UI v8 (`@fluentui/react`) + SCSS modules.
+6. DO use React 17 (until SPFx 1.24, then, and only after then, can React 18 be used).  Any candidate dependencies (react-router, etc) MUST be compatible with the version of React used.
+7. DO use localization strings for ANY/EVERY piece of text a user might see.
+8. DO use SPFx Theming; DO NOT use custom colors/fonts (these are available through themes)
+9. DO follow SOLID and DRY principles and use established software patterns where appropriate.
+10. DO separate concerns and build appropriate structure to support testability and modularity.  For example data/api access sits behind a Service with appropriate interface.
+12. DO keep logic minimal in EXTENSION.ts files (e.g. ____WebPart.ts and _____ApplicationCustomizer.ts).  Retrieve what's needed, build services as needed, and move to straight TypeScript and/or React as appropriate.
+13. DO build accessible UI: prefer Fluent UI controls, support keyboard navigation, and provide ARIA labels.

@@ -1,6 +1,6 @@
 # kanduu digital workplace
 
-Microsoft 365 extensibility for the kanduu digital workplace: SharePoint Framework (SPFx) web parts and extensions, plus the PnP.PowerShell scripts that provision them.
+Microsoft 365 extensibility for the kanduu digital workplace: SharePoint Framework (SPFx) web parts and extensions, the background workers that feed them data, and the PnP.PowerShell scripts that provision them.
 
 ## Repository layout
 
@@ -9,6 +9,7 @@ Microsoft 365 extensibility for the kanduu digital workplace: SharePoint Framewo
 | `spfx/customizers-global` | Application customizers deployed tenant-wide (e.g. the themed header banner) |
 | `spfx/webparts-global` | Web parts available to all sites |
 | `spfx/shared` | `@kanduu/spfx-shared`: TypeScript shared by the SPFx packages |
+| `workers` | Background jobs: host-agnostic Node.js apps (e.g. `stock-quote` refreshes the Stock Ticker list) |
 | `scripts` | PnP.PowerShell provisioning scripts and per-site JSON configurations |
 | `docs` | Reference documentation for people and coding agents |
 
@@ -63,6 +64,7 @@ npm run customizers-global:start
 - [docs/application-customizers.md](docs/application-customizers.md): provisioning application customizers
 - [docs/customizers-global.md](docs/customizers-global.md): the `customizers-global` package
 - [docs/shared.md](docs/shared.md): the `@kanduu/spfx-shared` package and its tests
+- [docs/workers.md](docs/workers.md): background workers, hosting and authentication
 - [docs/commit-message.md](docs/commit-message.md): commit message and PR title conventions
 
 ## Contributing

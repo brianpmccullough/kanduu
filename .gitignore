@@ -9,3 +9,6 @@ release/
 .heft/
 coverage/
 lib-commonjs/
+.env
+.env.*
+!.env.example

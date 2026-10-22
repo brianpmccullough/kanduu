@@ -66,7 +66,7 @@ Behavior:
 - Colors come from the theme (`semanticColors.successIcon` / `errorIcon`) on a small `bodyBackground` pill, so they stay readable on the primary-colored banner.  The arrow icon carries the direction too, so it does not depend on color alone.
 - Nothing is rendered while loading, when the list is empty, when the first item has no `Ticker` or `CurrentPrice`, or when the request fails (logged as a warning).
 - Everyone who sees the header needs read access to the list.  When the list is on a central site, grant visitors read there.
-- Updating the list (e.g. Power Automate or a scheduled job) is out of scope for this repo.
+- The `stock-quote` worker keeps the list up to date.  See [workers.md](workers.md#stock-quote).
 
 ## Pattern: themed React UI from an application customizer
 
