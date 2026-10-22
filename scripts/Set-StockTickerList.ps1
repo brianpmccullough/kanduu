@@ -21,21 +21,25 @@
     URL of the site that hosts the list (typically one central site, such as the home site).
 
 .PARAMETER ClientId
-    Client ID of the Entra ID app registration used for PnP.PowerShell interactive sign-in.
+    Client ID of the Entra ID app registration used for PnP.PowerShell interactive sign-in.  Optional:
+    when omitted, PnP.PowerShell uses its default client ID from the ENTRAID_APP_ID, ENTRAID_CLIENT_ID or
+    AZURE_CLIENT_ID environment variable (or Set-PnPManagedAppId).
+    See https://pnp.github.io/powershell/articles/defaultclientid.html
 
 .PARAMETER ListTitle
     List title.  Must match "stockTicker.listTitle" in the header configuration.
 
 .EXAMPLE
-    ./scripts/Set-StockTickerList.ps1 -SiteUrl https://contoso.sharepoint.com `
-        -ClientId 00000000-0000-0000-0000-000000000000
+    ./scripts/Set-StockTickerList.ps1 -SiteUrl https://contoso.sharepoint.com
+
+.EXAMPLE
+    ./scripts/Set-StockTickerList.ps1 -SiteUrl https://contoso.sharepoint.com -ClientId 00000000-0000-0000-0000-000000000000
 #>
 [CmdletBinding(SupportsShouldProcess)]
 param(
     [Parameter(Mandatory)]
     [string]$SiteUrl,
 
-    [Parameter(Mandatory)]
     [string]$ClientId,
 
     [string]$ListTitle = 'Stock Ticker'
@@ -65,7 +69,11 @@ $fieldDefinitions = @(
 )
 $viewFields = @('Title') + ($fieldDefinitions | ForEach-Object { $_.InternalName })
 
-Connect-PnPOnline -Url $SiteUrl -Interactive -ClientId $ClientId
+$connectArgs = @{ Url = $SiteUrl; Interactive = $true }
+if ($ClientId) {
+    $connectArgs.ClientId = $ClientId
+}
+Connect-PnPOnline @connectArgs
 
 $list = Get-PnPList -Identity $ListTitle
 if (-not $list) {

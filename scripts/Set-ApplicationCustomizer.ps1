@@ -17,7 +17,14 @@
     Path to a JSON configuration file (see scripts/config/*.json).
 
 .PARAMETER ClientId
-    Client ID of the Entra ID app registration used for PnP.PowerShell interactive sign-in.
+    Client ID of the Entra ID app registration used for PnP.PowerShell interactive sign-in.  Optional:
+    when omitted, PnP.PowerShell uses its default client ID from the ENTRAID_APP_ID, ENTRAID_CLIENT_ID or
+    AZURE_CLIENT_ID environment variable (or Set-PnPManagedAppId).
+    See https://pnp.github.io/powershell/articles/defaultclientid.html
+
+.EXAMPLE
+    ./scripts/Set-ApplicationCustomizer.ps1 -SiteUrl https://contoso.sharepoint.com/sites/intranet `
+        -ConfigPath ./scripts/config/header.default.json
 
 .EXAMPLE
     ./scripts/Set-ApplicationCustomizer.ps1 -SiteUrl https://contoso.sharepoint.com/sites/intranet `
@@ -31,7 +38,6 @@ param(
     [Parameter(Mandatory)]
     [string]$ConfigPath,
 
-    [Parameter(Mandatory)]
     [string]$ClientId
 )
 
@@ -57,7 +63,11 @@ $properties = if ($null -ne $config.properties) {
     '{}'
 }
 
-Connect-PnPOnline -Url $SiteUrl -Interactive -ClientId $ClientId
+$connectArgs = @{ Url = $SiteUrl; Interactive = $true }
+if ($ClientId) {
+    $connectArgs.ClientId = $ClientId
+}
+Connect-PnPOnline @connectArgs
 
 $existing = @(Get-PnPApplicationCustomizer -ClientSideComponentId $componentId -Scope All)
 if ($existing.Count -gt 0) {

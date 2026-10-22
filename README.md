@@ -19,7 +19,7 @@ This is an [npm workspaces](https://docs.npmjs.com/cli/using-npm/workspaces) mon
 
 - Node.js 22 (>= 22.14.0, < 23)
 - A Microsoft 365 tenant with a SharePoint App Catalog
-- For provisioning: PowerShell 7.4+ and [PnP.PowerShell](https://pnp.github.io/powershell/) 3.x, and an Entra ID app registration for sign-in
+- For provisioning: PowerShell 7.4+ and [PnP.PowerShell](https://pnp.github.io/powershell/) 3.x, and an Entra ID app registration for sign-in, set as the [default client ID](https://pnp.github.io/powershell/articles/defaultclientid.html) (e.g. `ENTRAID_APP_ID`)
 
 ## Getting started
 
@@ -51,7 +51,7 @@ npm run customizers-global:start
 
    ```powershell
    ./scripts/Set-ApplicationCustomizer.ps1 -SiteUrl https://<tenant>.sharepoint.com/sites/<site> `
-       -ConfigPath ./scripts/config/header.default.json -ClientId <entra-app-client-id>
+       -ConfigPath ./scripts/config/header.default.json
    ```
 
    The script can be re-run.  It replaces any existing registration with the current configuration.  See [docs/application-customizers.md](docs/application-customizers.md).

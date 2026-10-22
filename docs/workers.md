@@ -53,7 +53,7 @@ Each worker that writes to SharePoint has its own Entra ID app registration:
 Step 4 runs with PnP.PowerShell as a SharePoint admin.  The PnP sign-in app needs the Microsoft Graph `Sites.FullControl.All` permission.
 
 ```powershell
-Connect-PnPOnline -Url https://<tenant>.sharepoint.com -Interactive -ClientId <pnp-admin-app-client-id>
+Connect-PnPOnline -Url https://<tenant>.sharepoint.com -Interactive   # uses ENTRAID_APP_ID, or add -ClientId
 Grant-PnPEntraIDAppSitePermission -AppId <worker-client-id> -DisplayName 'kanduu stock quote worker' `
     -Site https://<tenant>.sharepoint.com/sites/<site> -Permissions Write
 ```

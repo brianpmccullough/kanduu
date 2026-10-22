@@ -57,7 +57,7 @@ The ticker reads the **first item (lowest ID)** of a SharePoint list once per pa
 Provision or update the list (safe to re-run; supports `-WhatIf`):
 
 ```powershell
-./scripts/Set-StockTickerList.ps1 -SiteUrl https://<tenant>.sharepoint.com -ClientId <entra-app-client-id>
+./scripts/Set-StockTickerList.ps1 -SiteUrl https://<tenant>.sharepoint.com
 ```
 
 Behavior:
