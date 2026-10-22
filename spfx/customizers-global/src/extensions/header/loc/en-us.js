@@ -44,14 +44,16 @@ define([], function() {
     "SearchAriaLabel": "Search",
     "SettingsLabel": "Settings",
     "ProfileAriaLabel": "Profile for",
-    "MyLinksTitle": "My links",
-    "MyLinksLoading": "Loading your links",
-    "MyLinksEmpty": "You have no links yet.",
-    "MyLinksPersonalizeNote": "Personalizing your links is coming soon.",
+    "QuickLinksTitle": "My quick links",
+    "QuickLinksLoading": "Loading your quick links",
+    "QuickLinksEmpty": "You have no quick links yet.",
+    "ManageQuickLinksLabel": "Manage",
+    "ManageQuickLinksAriaLabel": "Manage my quick links",
+    "SampleLinkWorkday": "Workday",
+    "SampleLinkNelAi": "nelAI",
+    "SampleLinkCrm": "CRM",
     "SampleLinkOutlook": "Outlook",
     "SampleLinkTeams": "Teams",
-    "SampleLinkMicrosoft365": "Microsoft 365",
-    "SampleLinkMyApps": "My apps",
-    "SampleLinkMyAccount": "My account"
+    "SampleLinkLearning": "Learning"
   }
 });

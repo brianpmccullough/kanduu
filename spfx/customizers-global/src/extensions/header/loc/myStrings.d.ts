@@ -44,15 +44,17 @@ declare interface IHeaderApplicationCustomizerStrings {
   SearchAriaLabel: string;
   SettingsLabel: string;
   ProfileAriaLabel: string;
-  MyLinksTitle: string;
-  MyLinksLoading: string;
-  MyLinksEmpty: string;
-  MyLinksPersonalizeNote: string;
+  QuickLinksTitle: string;
+  QuickLinksLoading: string;
+  QuickLinksEmpty: string;
+  ManageQuickLinksLabel: string;
+  ManageQuickLinksAriaLabel: string;
+  SampleLinkWorkday: string;
+  SampleLinkNelAi: string;
+  SampleLinkCrm: string;
   SampleLinkOutlook: string;
   SampleLinkTeams: string;
-  SampleLinkMicrosoft365: string;
-  SampleLinkMyApps: string;
-  SampleLinkMyAccount: string;
+  SampleLinkLearning: string;
 }
 
 declare module 'HeaderApplicationCustomizerStrings' {
