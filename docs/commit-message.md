@@ -96,6 +96,14 @@ Mark a breaking change with `!` after the type/scope **and** a `BREAKING CHANGE:
 - One logical change per commit.  Formatting-only or refactor changes go in a separate commit from behavior changes.
 - Every commit should build (`npm run build`).
 
+## Pull requests and squash merges
+
+A squash merge replaces the branch's commits with one commit whose subject is the PR title and whose body comes from the PR description.  So:
+
+- Write the PR title as a commit subject that follows these rules: `type(scope)!: description`, imperative, no period.  Use the type of the most significant change, and include `!` if any commit in the PR is breaking.
+- Keep any `BREAKING CHANGE:` footer in the PR description (or the squash dialog), so it reaches the default branch.
+- Before confirming the squash, check GitHub's generated message.  It often lists every commit subject; replace that list with a body that explains what and why.
+
 ## Examples
 
 ```text
