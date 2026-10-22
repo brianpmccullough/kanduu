@@ -30,4 +30,4 @@ Plain TypeScript shared by the SPFx packages: models, service interfaces and imp
 
 | Path | Purpose |
 | --- | --- |
-| `src/stockQuote` | `IStockQuote`, `IStockQuoteService`, `StockQuoteService` (PnPJS, reads the Stock Ticker list) |
+| `src/stockQuote` | `IStockQuote`, `IStockQuoteService`, `StockQuoteService` (PnPJS, reads the Stock Ticker list), `getStockQuoteChange` |

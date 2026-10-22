@@ -1,12 +1,4 @@
-import type { IStockQuote } from '@kanduu/spfx-shared';
-
-export type StockQuoteDirection = 'up' | 'down' | 'unchanged';
-
-export interface IStockQuoteChange {
-  direction: StockQuoteDirection;
-  /** Change since the last close as a fraction (0.0123 = 1.23%); undefined without a usable last close. */
-  percentChange: number | undefined;
-}
+import type { IStockQuote, IStockQuoteChange } from './IStockQuote';
 
 /** Direction and percent change of the current price relative to the last close. */
 export function getStockQuoteChange(quote: IStockQuote): IStockQuoteChange {

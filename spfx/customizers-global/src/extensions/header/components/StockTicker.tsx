@@ -1,11 +1,15 @@
 import * as React from 'react';
 import { Log } from '@microsoft/sp-core-library';
 import { hiddenContentStyle, Icon, mergeStyles, TooltipHost, useTheme } from '@fluentui/react';
-import type { IStockQuote, IStockQuoteService } from '@kanduu/spfx-shared';
+import {
+  getStockQuoteChange,
+  type IStockQuote,
+  type IStockQuoteService,
+  type StockQuoteDirection
+} from '@kanduu/spfx-shared';
 
 import * as strings from 'HeaderApplicationCustomizerStrings';
 import styles from './HeaderBanner.module.scss';
-import { getStockQuoteChange, type StockQuoteDirection } from './getStockQuoteChange';
 import { formatAsOf, formatPercentChange, formatPrice, formatString } from './stockTickerFormat';
 
 const LOG_SOURCE: string = 'StockTicker';

@@ -1,5 +1,4 @@
-import type { IStockQuote } from '@kanduu/spfx-shared';
-
+import type { IStockQuote } from './IStockQuote';
 import { getStockQuoteChange } from './getStockQuoteChange';
 
 const quote = (currentPrice: number, lastClosePrice: number | undefined): IStockQuote => ({
