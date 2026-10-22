@@ -43,11 +43,18 @@ npm run customizers-global:start
 | `npm run <package>:build` | Build `shared` and one package (e.g. `webparts-global:build`) |
 | `npm run <package>:start` | Build `shared` and serve one package locally |
 | `npm run <package>:clean` | Clean one package |
+| `npm run stock-quote:once` / `stock-quote:start` | Build the stock-quote worker and refresh once / every `REFRESH_INTERVAL_MINUTES` |
 
 ## Deploying
 
 1. Build, then upload `spfx/<package>/sharepoint/solution/<package>.sppkg` to the tenant App Catalog and make it available to all sites.
-2. Activate application customizers per site with PnP.PowerShell:
+2. Create the header's Stock Ticker list on the root site, which hosts shared lists:
+
+   ```powershell
+   ./scripts/Set-StockTickerList.ps1 -SiteUrl https://<tenant>.sharepoint.com
+   ```
+
+3. Activate application customizers per site with PnP.PowerShell:
 
    ```powershell
    ./scripts/Set-ApplicationCustomizer.ps1 -SiteUrl https://<tenant>.sharepoint.com/sites/<site> `
@@ -55,7 +62,7 @@ npm run customizers-global:start
    ```
 
    The script can be re-run.  It replaces any existing registration with the current configuration.  See [docs/application-customizers.md](docs/application-customizers.md).
-3. Create the header's Stock Ticker list with `./scripts/Set-StockTickerList.ps1`.  See [docs/customizers-global.md](docs/customizers-global.md#stock-ticker).
+4. Keep the Stock Ticker list current with the `stock-quote` worker: register its app, then fill in `workers/stock-quote/.env` and run `npm run stock-quote:start`, or host it.  See [docs/workers.md](docs/workers.md).
 
 ## Documentation
 

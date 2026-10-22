@@ -56,7 +56,12 @@ Use `-WhatIf` to see what would change without changing anything.
   "clientSideComponentId": "003d0b35-944d-424f-ab09-b53f62618e53",
   "scope": "Site",
   "sequence": 0,
-  "properties": {}
+  "properties": {
+    "stockTicker": {
+      "siteUrl": "https://mmcbpm.sharepoint.com",
+      "listTitle": "Stock Ticker"
+    }
+  }
 }
 ```
 

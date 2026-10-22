@@ -71,11 +71,29 @@ Fetches quotes from [Alpha Vantage](https://www.alphavantage.co/documentation/#l
 - **API key:** Alpha Vantage only accepts the key in the query string, so the worker never logs request URLs.  Keep the key in `.env` or the host's app settings.
 - **Market data terms:** free plans (Alpha Vantage included) generally limit how their data can be displayed or redistributed.  Check the provider's terms before showing quotes to employees.  The provider sits behind `IQuoteProvider`, so it can be swapped.
 
+#### First-time setup
+
+1. Create the list: `./scripts/Set-StockTickerList.ps1 -SiteUrl https://<tenant>.sharepoint.com` (in this tenant, the root site).
+2. Register the worker app and grant it Write on that site (see [App registration](#app-registration-microsoft-365-access)).
+3. Get an [Alpha Vantage API key](https://www.alphavantage.co/support/#api-key).
+4. Configure and run:
+
 ```bash
 cp workers/stock-quote/.env.example workers/stock-quote/.env   # then fill it in
 npm run stock-quote:once     # build, test, refresh once
 npm run stock-quote:start    # build, test, refresh every REFRESH_INTERVAL_MINUTES (Ctrl+C to stop)
 ```
+
+#### Troubleshooting
+
+| Message | Cause / fix |
+| --- | --- |
+| `Missing environment variables: ...` | Fill in `.env` (or the host's app settings) |
+| `Token request failed: 401 ...` | Wrong `TENANT_ID` / `CLIENT_ID`, or `CLIENT_SECRET` is the secret's ID or has expired |
+| `Graph GET /sites/... failed: 403 accessDenied` | The app has no grant on the site.  Run `Grant-PnPEntraIDAppSitePermission` (step 4 of the app registration). |
+| `List 'Stock Ticker' not found ...` | Run `Set-StockTickerList.ps1` on `SHAREPOINT_SITE_URL`, or fix `STOCK_TICKER_LIST_TITLE` |
+| `Alpha Vantage: ... rate limit ...` | The daily free limit (25) has been used.  Raise `REFRESH_INTERVAL_MINUTES` or use fewer symbols. |
+| `Alpha Vantage has no quote for 'X'` | Unknown symbol |
 
 ## Adding a worker
 

@@ -31,7 +31,7 @@ Layout: actions area (empty `CommandBar`) on the left, then on the right a stock
 
 | Property | Default | Notes |
 | --- | --- | --- |
-| `stockTicker.siteUrl` | current site | Site that hosts the Stock Ticker list.  Set it to one central site (e.g. the home site) so a single list feeds every site. |
+| `stockTicker.siteUrl` | current site | Site that hosts the Stock Ticker list.  Set it to one central site so a single list feeds every site.  In this tenant, that's the root site (`header.default.json`). |
 | `stockTicker.listTitle` | `Stock Ticker` | Must match `-ListTitle` of `Set-StockTickerList.ps1` |
 
 ```json
