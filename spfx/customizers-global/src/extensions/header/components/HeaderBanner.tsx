@@ -88,18 +88,18 @@ const HeaderBanner: React.FC<IHeaderBannerProps> = ({
             ariaLabel={strings.SearchAriaLabel}
             onSearch={() => { /* stub: search not implemented yet */ }}
           />
+          <ProfileButton
+            userDisplayName={userDisplayName}
+            userEmail={userEmail}
+            userLinksService={userLinksService}
+            hoverBackgroundColor={themeDark}
+          />
           <IconButton
             iconProps={{ iconName: 'Settings' }}
             title={strings.SettingsLabel}
             ariaLabel={strings.SettingsLabel}
             styles={iconStyles}
             onClick={() => { /* stub: settings not implemented yet */ }}
-          />
-          <ProfileButton
-            userDisplayName={userDisplayName}
-            userEmail={userEmail}
-            userLinksService={userLinksService}
-            hoverBackgroundColor={themeDark}
           />
         </div>
       </header>

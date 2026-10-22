@@ -101,7 +101,6 @@ export function getDefaultHeaderCommands(): IHeaderCommand[] {
         }
       ]
     },
-    { key: 'news', text: strings.CommandNews, iconName: 'News' },
     {
       key: 'ourBrands',
       text: strings.CommandOurBrands,
@@ -148,6 +147,7 @@ export function getDefaultHeaderCommands(): IHeaderCommand[] {
           ]
         }
       ]
-    }
+    },
+    { key: 'news', text: strings.CommandNews, iconName: 'News' }
   ];
 }
