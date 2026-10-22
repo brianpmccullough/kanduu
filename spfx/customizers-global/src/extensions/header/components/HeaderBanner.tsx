@@ -13,6 +13,7 @@ import {
 } from '@fluentui/react';
 
 import * as strings from 'HeaderApplicationCustomizerStrings';
+import { registerBrandIcons } from './brandIcons';
 import { getDefaultHeaderCommands } from './defaultHeaderCommands';
 import styles from './HeaderBanner.module.scss';
 import { toCommandBarItems } from './headerCommands';
@@ -21,6 +22,7 @@ import ProfileButton from './ProfileButton';
 import StockTicker from './StockTicker';
 
 initializeIcons();
+registerBrandIcons();
 
 /**
  * Themed banner for the page header.  Wrapped in a Fluent ThemeProvider built from the

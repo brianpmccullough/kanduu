@@ -25,6 +25,7 @@ Renders a banner in the page's **Top** placeholder, colored with the site's prim
 | `components/stockTickerFormat.ts` | Locale-aware price, percent and date formatting |
 | `components/headerCommands.ts` | Command model (`IHeaderCommand` → sections → links) and `toCommandBarItems`, which maps it to Fluent `CommandBar` items |
 | `components/defaultHeaderCommands.ts` | Sample intranet commands; see [Commands](#commands) |
+| `components/brandIcons.tsx` | Registers social network logos as Fluent icons (`BrandLinkedIn`, `BrandYouTube`, `BrandFacebook`, `BrandInstagram`, `BrandX`) |
 | `components/ProfileButton.tsx` | Current user's `Persona`; opens the profile popup.  See [Profile popup](#profile-popup) |
 | `components/ProfileCard.tsx` | Popup contents: the user's name and email, and their links |
 | `components/sampleUserLinks.ts` | Sample "My links" until users can personalize them |
@@ -76,15 +77,24 @@ Behavior:
 
 ## Commands
 
-Sample intranet commands, defined in `defaultHeaderCommands.ts`.  They are **stubs**: the links have no destinations yet, so choosing one only closes the menu.  Destinations (and possibly the commands themselves) will come from configuration once the target systems are known.
+Sample intranet commands, defined in `defaultHeaderCommands.ts`.  Except for Socials, they are **stubs**: the links have no destinations yet, so choosing one only closes the menu.  Destinations (and possibly the commands themselves) will come from configuration once the target systems are known.
 
 | Command | Contents |
 | --- | --- |
 | I want to... | **Pay and time off**: get my pay slip, request time off, submit an expense report, update my personal details.  **Workplace**: book a meeting room, book travel, find a colleague.  **Get help**: report an IT issue, ask HR a question. |
 | Departments | Human Resources, Finance, IT, Facilities |
 | News | A single link |
+| Socials | LinkedIn, YouTube, Facebook, Instagram, X (Twitter), then the public website.  They point at Microsoft's public accounts as placeholders and open in a new tab. |
 
-To add or change commands, edit `defaultHeaderCommands.ts` (text from `loc/` strings, icons from [Fluent UI MDL2 icons](https://developer.microsoft.com/en-us/fluentui#/styles/web/icons)).  A command with `sections` becomes a menu; each section is a group of links with an optional heading.  A link with an `href` navigates.  Items are styled with the banner's theme colors; their menus use the site theme.
+To add or change commands, edit `defaultHeaderCommands.ts` (text from `loc/` strings, icons from [Fluent UI MDL2 icons](https://developer.microsoft.com/en-us/fluentui#/styles/web/icons)).  A command with `sections` becomes a menu; each section is a group of links with an optional heading.  A link with an `href` navigates; `openInNewTab` opens it in a new tab (`rel="noopener noreferrer"`).  Items are styled with the banner's theme colors; their menus use the site theme.
+
+### Brand icons
+
+The Fluent MDL2 icon font has no YouTube, Facebook, Instagram or X logos, so `brandIcons.tsx` registers them (and LinkedIn, for a matching style) as SVG icons with Fluent's `registerIcons`.  `HeaderBanner` registers them once at load, after `initializeIcons()`.  Use them like any Fluent icon (`iconName: 'BrandYouTube'`).
+
+- The paths come from [Simple Icons](https://simpleicons.org) (CC0).  The logos remain their owners' trademarks; use them only to link to those services.
+- They are single-color and drawn in `currentColor`, so they take the theme's icon color, like the other icons.  Don't add brand colors (no custom colors).
+- The public website uses the MDL2 `Globe` icon.
 
 ## Profile popup
 

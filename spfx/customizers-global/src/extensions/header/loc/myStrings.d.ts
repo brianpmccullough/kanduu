@@ -22,6 +22,13 @@ declare interface IHeaderApplicationCustomizerStrings {
   CommandDepartmentIt: string;
   CommandDepartmentFacilities: string;
   CommandNews: string;
+  CommandSocials: string;
+  SocialLinkedIn: string;
+  SocialYouTube: string;
+  SocialFacebook: string;
+  SocialInstagram: string;
+  SocialX: string;
+  SocialWebsite: string;
   StockTickerUp: string;
   StockTickerDown: string;
   StockTickerUnchanged: string;

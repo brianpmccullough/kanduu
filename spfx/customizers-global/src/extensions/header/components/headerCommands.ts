@@ -12,6 +12,8 @@ export interface IHeaderMenuLink {
   iconName?: string;
   /** Where the link goes.  Omitted for stubs, which do nothing yet. */
   href?: string;
+  /** Open the link in a new tab (e.g. external sites). */
+  openInNewTab?: boolean;
 }
 
 /** A group of links in a header menu, with an optional heading. */
@@ -26,10 +28,12 @@ export interface IHeaderCommand extends IHeaderMenuLink {
   sections?: IHeaderMenuSection[];
 }
 
-const toMenuItem = ({ key, text, iconName, href }: IHeaderMenuLink): IContextualMenuItem => ({
+const toMenuItem = ({ key, text, iconName, href, openInNewTab }: IHeaderMenuLink): IContextualMenuItem => ({
   key,
   text,
   href,
+  target: openInNewTab ? '_blank' : undefined,
+  rel: openInNewTab ? 'noopener noreferrer' : undefined,
   iconProps: iconName ? { iconName } : undefined
 });
 

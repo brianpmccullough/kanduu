@@ -2,8 +2,9 @@ import * as strings from 'HeaderApplicationCustomizerStrings';
 import type { IHeaderCommand } from './headerCommands';
 
 /**
- * Sample intranet commands.  Stubs: no destinations yet, so the links do nothing.
+ * Sample intranet commands.  Stubs: apart from Socials, no destinations yet, so the links do nothing.
  * Destinations will come from configuration once the target systems are known.
+ * Socials point at Microsoft's public accounts as placeholders for the company's own.
  */
 export function getDefaultHeaderCommands(): IHeaderCommand[] {
   return [
@@ -57,6 +58,29 @@ export function getDefaultHeaderCommands(): IHeaderCommand[] {
         }
       ]
     },
-    { key: 'news', text: strings.CommandNews, iconName: 'News' }
+    { key: 'news', text: strings.CommandNews, iconName: 'News' },
+    {
+      key: 'socials',
+      text: strings.CommandSocials,
+      iconName: 'Share',
+      sections: [
+        {
+          key: 'socials',
+          links: [
+            { key: 'linkedIn', text: strings.SocialLinkedIn, iconName: 'BrandLinkedIn', href: 'https://www.linkedin.com/company/microsoft/', openInNewTab: true },
+            { key: 'youTube', text: strings.SocialYouTube, iconName: 'BrandYouTube', href: 'https://www.youtube.com/@Microsoft', openInNewTab: true },
+            { key: 'facebook', text: strings.SocialFacebook, iconName: 'BrandFacebook', href: 'https://www.facebook.com/Microsoft', openInNewTab: true },
+            { key: 'instagram', text: strings.SocialInstagram, iconName: 'BrandInstagram', href: 'https://www.instagram.com/microsoft/', openInNewTab: true },
+            { key: 'x', text: strings.SocialX, iconName: 'BrandX', href: 'https://x.com/Microsoft', openInNewTab: true }
+          ]
+        },
+        {
+          key: 'website',
+          links: [
+            { key: 'website', text: strings.SocialWebsite, iconName: 'Globe', href: 'https://www.microsoft.com/', openInNewTab: true }
+          ]
+        }
+      ]
+    }
   ];
 }
