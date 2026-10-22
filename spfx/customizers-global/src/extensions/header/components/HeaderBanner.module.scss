@@ -61,6 +61,37 @@
   width: 200px;
 }
 
+.profileCard {
+  box-sizing: border-box;
+  width: 300px;
+  max-width: calc(100vw - 32px);
+  padding: 16px;
+}
+
+.profileLinks {
+  margin-top: 16px;
+}
+
+.profileLinksTitle {
+  margin: 0 0 8px;
+  font-weight: 600;
+}
+
+.profileLinkList {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+
+  li {
+    padding: 4px 0;
+  }
+}
+
+.profileNote {
+  margin-top: 12px;
+  color: "[theme:bodySubtext, default: #605e5c]";
+}
+
 @media (max-width: 639px) {
   .ticker {
     display: none;
