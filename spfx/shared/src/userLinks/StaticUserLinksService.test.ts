@@ -1,7 +1,7 @@
 import { StaticUserLinksService } from './StaticUserLinksService';
 
 const links = [
-  { key: 'outlook', title: 'Outlook', url: 'https://outlook.office.com/mail/' },
+  { key: 'outlook', title: 'Outlook', url: 'https://outlook.office.com/mail/', iconName: 'OutlookLogo' },
   { key: 'teams', title: 'Teams', url: 'https://teams.microsoft.com/' }
 ];
 

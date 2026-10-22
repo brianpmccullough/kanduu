@@ -27,8 +27,8 @@ Renders a banner in the page's **Top** placeholder, colored with the site's prim
 | `components/defaultHeaderCommands.ts` | Sample intranet commands; see [Commands](#commands) |
 | `components/brandIcons.tsx` | Registers social network logos as Fluent icons (`BrandLinkedIn`, `BrandYouTube`, `BrandFacebook`, `BrandInstagram`, `BrandX`) |
 | `components/ProfileButton.tsx` | Current user's `Persona`; opens the profile popup.  See [Profile popup](#profile-popup) |
-| `components/ProfileCard.tsx` | Popup contents: the user's name and email, and their links |
-| `components/sampleUserLinks.ts` | Sample "My links" until users can personalize them |
+| `components/ProfileCard.tsx` | Popup contents: the user's name and email, their quick link tiles and a Manage button |
+| `components/sampleUserLinks.ts` | Sample quick links until users can personalize them |
 
 Layout: commands (`CommandBar`) on the left, then on the right a stock ticker, a search box, the profile and a settings (gear) button.  The search box and gear are stubs with no behavior yet; the gear sits last so it can later be shown only to site owners or admins without shifting the other items.  The ticker is hidden below 640px; commands that don't fit move to the CommandBar's overflow ("More commands") menu.
 
@@ -101,10 +101,10 @@ The Fluent MDL2 icon font has no YouTube, Facebook, Instagram or X logos, so `br
 Selecting the profile picture opens a popup below it (`FocusTrapCallout`, `role="dialog"`) with:
 
 - the user's name and email (from the page context; no extra request)
-- **My links**: the user's links, which open in a new tab
-- a note that personalizing links is coming soon.
+- **My quick links**: the user's bookmarks as a grid of tiles (icon and title) that open in a new tab
+- a **Manage** button for editing quick links.  It is a stub with no behavior yet.
 
-Links come from an `IUserLinksService` (`@kanduu/spfx-shared`), loaded the first time the popup opens.  For now it is `StaticUserLinksService` with the sample links in `sampleUserLinks.ts` (Outlook, Teams, Microsoft 365, My apps, My account), so every user sees the same links.  Personal links will be a second implementation that reads and writes a JSON file in the app folder of the user's OneDrive (Microsoft Graph `/me/drive/special/approot`); the popup will not need to change.
+Links come from an `IUserLinksService` (`@kanduu/spfx-shared`), loaded the first time the popup opens.  Each `IUserLink` can name a [Fluent UI MDL2 icon](https://developer.microsoft.com/en-us/fluentui#/styles/web/icons) (`iconName`); without one the tile shows a generic link icon.  For now the service is `StaticUserLinksService` with the sample links in `sampleUserLinks.ts` (Workday, nelAI, CRM, Outlook, Teams, Learning; the internal tools use placeholder `example.com` addresses), so every user sees the same links.  Personal links will be a second implementation that reads and writes a JSON file in the app folder of the user's OneDrive (Microsoft Graph `/me/drive/special/approot`), and Manage will open an editor for it; the tiles will not need to change.
 
 Keyboard: Enter or Space opens the popup and focus moves into it; Tab stays inside it; Escape or selecting outside closes it and focus returns to the button.
 

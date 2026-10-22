@@ -31,4 +31,4 @@ Plain TypeScript shared by the SPFx packages: models, service interfaces and imp
 | Path | Purpose |
 | --- | --- |
 | `src/stockQuote` | `IStockQuote`, `IStockQuoteService`, `StockQuoteService` (PnPJS, reads the Stock Ticker list), `getStockQuoteChange` |
-| `src/userLinks` | `IUserLink`, `IUserLinksService`, `StaticUserLinksService` (fixed sample links until links are stored per user in OneDrive) |
+| `src/userLinks` | `IUserLink`, `IUserLinksService`, `StaticUserLinksService` (fixed sample quick links, each with an optional icon, until links are stored per user in OneDrive) |

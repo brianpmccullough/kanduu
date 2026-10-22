@@ -4,4 +4,6 @@ export interface IUserLink {
   key: string;
   title: string;
   url: string;
+  /** Fluent UI icon name shown with the link; a generic link icon when omitted. */
+  iconName?: string;
 }
