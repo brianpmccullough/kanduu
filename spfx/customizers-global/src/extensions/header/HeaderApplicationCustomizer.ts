@@ -12,16 +12,23 @@ import {
   ThemeProvider
 } from '@microsoft/sp-component-base';
 
+import {
+  type IStockQuoteService,
+  type IStockQuoteServiceOptions,
+  StockQuoteService
+} from '@kanduu/spfx-shared';
+
 import * as strings from 'HeaderApplicationCustomizerStrings';
 import HeaderBanner from './components/HeaderBanner';
 import type { IHeaderBannerProps } from './components/IHeaderBannerProps';
 
 const LOG_SOURCE: string = 'HeaderApplicationCustomizer';
 
-/**
- * ClientSideComponentProperties for the header.  None are needed yet.
- */
-export interface IHeaderApplicationCustomizerProperties {}
+/** ClientSideComponentProperties for the header (set in /scripts/config/header.*.json). */
+export interface IHeaderApplicationCustomizerProperties {
+  /** Stock ticker list location; defaults to the "Stock Ticker" list on the current site. */
+  stockTicker?: IStockQuoteServiceOptions;
+}
 
 /** Renders the themed React header banner into the page's Top placeholder. */
 export default class HeaderApplicationCustomizer
@@ -30,6 +37,7 @@ export default class HeaderApplicationCustomizer
   private _topPlaceholder: PlaceholderContent | undefined;
   private _themeProvider: ThemeProvider | undefined;
   private _theme: IReadonlyTheme | undefined;
+  private _stockQuoteService!: IStockQuoteService;
 
   public onInit(): Promise<void> {
     Log.info(LOG_SOURCE, `Initialized ${strings.Title}`);
@@ -37,6 +45,8 @@ export default class HeaderApplicationCustomizer
     this._themeProvider = this.context.serviceScope.consume(ThemeProvider.serviceKey);
     this._theme = this._themeProvider.tryGetTheme();
     this._themeProvider.themeChangedEvent.add(this, this._onThemeChanged);
+
+    this._stockQuoteService = new StockQuoteService(this.context, this.properties.stockTicker);
 
     this.context.placeholderProvider.changedEvent.add(this, this._render);
     this._render();
@@ -67,11 +77,13 @@ export default class HeaderApplicationCustomizer
       return;
     }
 
-    const { user } = this.context.pageContext;
+    const { user, cultureInfo } = this.context.pageContext;
     const element: React.ReactElement<IHeaderBannerProps> = React.createElement(HeaderBanner, {
       theme: this._theme,
       userDisplayName: user.displayName,
-      userEmail: user.email
+      userEmail: user.email,
+      locale: cultureInfo.currentCultureName,
+      stockQuoteService: this._stockQuoteService
     });
 
     ReactDom.render(element, this._topPlaceholder.domElement);

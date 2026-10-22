@@ -22,7 +22,7 @@ initializeIcons();
  * Themed banner for the page header.  Wrapped in a Fluent ThemeProvider built from the
  * SPFx site theme so any menus, panels and dialogs added here pick up the site theme.
  */
-const HeaderBanner: React.FC<IHeaderBannerProps> = ({ theme, userDisplayName, userEmail }) => {
+const HeaderBanner: React.FC<IHeaderBannerProps> = ({ theme, userDisplayName, userEmail, locale, stockQuoteService }) => {
   const fluentTheme: ITheme = React.useMemo(
     () => createTheme(theme as IPartialTheme | undefined),
     [theme]
@@ -50,7 +50,7 @@ const HeaderBanner: React.FC<IHeaderBannerProps> = ({ theme, userDisplayName, us
           />
         </div>
         <div className={styles.utilities}>
-          <StockTicker className={styles.ticker} />
+          <StockTicker stockQuoteService={stockQuoteService} locale={locale} />
           <SearchBox
             className={styles.search}
             placeholder={strings.SearchPlaceholder}
