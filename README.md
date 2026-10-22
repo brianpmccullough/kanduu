@@ -54,6 +54,7 @@ npm run customizers-global:start
    ```
 
    The script can be re-run.  It replaces any existing registration with the current configuration.  See [docs/application-customizers.md](docs/application-customizers.md).
+3. Create the header's Stock Ticker list with `./scripts/Set-StockTickerList.ps1`.  See [docs/customizers-global.md](docs/customizers-global.md#stock-ticker).
 
 ## Documentation
 

@@ -12,7 +12,7 @@ This is an npm workspace monorepo ([npm workspaces](https://docs.npmjs.com/cli/v
 
 /spfx/shared - `@kanduu/spfx-shared`, plain TypeScript shared across SPFx packages (services, interfaces, models, utilities).  Reusable code goes here rather than being duplicated across packages.
 
-/scripts - PnP.PowerShell provisioning scripts (e.g. `Set-ApplicationCustomizer.ps1`) and their per-site JSON configurations in `/scripts/config`.  Extensions are activated with these scripts, not SPFx feature XML.
+/scripts - PnP.PowerShell provisioning scripts (e.g. `Set-ApplicationCustomizer.ps1`, `Set-StockTickerList.ps1`) and their per-site JSON configurations in `/scripts/config`.  Extensions are activated with these scripts, not SPFx feature XML.
 
 /docs - contains reference documents for both humans and agents.  These should be updated as the solution(s) grow.
 
