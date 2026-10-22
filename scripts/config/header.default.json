@@ -6,6 +6,7 @@
   "sequence": 0,
   "properties": {
     "stockTicker": {
+      "siteUrl": "https://mmcbpm.sharepoint.com",
       "listTitle": "Stock Ticker"
     }
   }
