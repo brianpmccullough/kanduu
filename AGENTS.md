@@ -39,6 +39,7 @@ This is an npm workspace monorepo ([npm workspaces](https://docs.npmjs.com/cli/v
 - Node >=22.14.0 <23.0.0, TypeScript, Jest (same versions as the SPFx packages)
 - Built-in `fetch` / `node:` modules; npm dependencies only from /docs/dependencies.md
 - Host-agnostic: logic behind interfaces in `src/core`, one `runXxx(env, logger)` entry, thin hosts in `src/hosts`
+- Workers publish data to SharePoint lists that clients read with REST / Graph (web, mobile, Teams).  Don't add a separate API layer without a decision recorded in /docs/workers.md.
 - Configuration only from environment variables, documented in `.env.example`.  Never commit secrets or `.env`.
 - Microsoft 365 access is app-only Microsoft Graph with `Sites.Selected` (least privilege)
 

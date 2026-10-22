@@ -45,7 +45,9 @@ Layout: actions area (empty `CommandBar`) on the left, then on the right a stock
 
 ## Stock ticker
 
-The ticker reads the **first item (lowest ID)** of a SharePoint list once per page load, through `StockQuoteService` (`@kanduu/spfx-shared`, PnPJS).  `getStockQuoteChange` (also in shared) works out the direction and percent change.  It shows the ticker, the current price and a direction indicator.  Hovering or focusing it shows the percent change since the last close and when the price was last updated, in the user's locale.
+The ticker shows the **first item (lowest ID)** of the Stock Ticker list: the ticker, the current price and a direction indicator.  Hovering or focusing it shows the percent change since the last close and when the price was last updated, in the user's locale.  It reads the list once per page load through `StockQuoteService` (`@kanduu/spfx-shared`, PnPJS).  `getStockQuoteChange`, also in shared, works out the direction and percent change.
+
+The data lives in a SharePoint list, not behind an API of our own.  That way web, mobile and Teams clients can all read it with REST or Microsoft Graph, and there's no API layer to host.  See [workers.md](workers.md#design-decision-workers-write-to-sharepoint-lists).
 
 | Field (internal name) | Display name | Type |
 | --- | --- | --- |

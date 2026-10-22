@@ -4,6 +4,19 @@ Background jobs ("server side" code) live in `/workers`.  Each worker is a small
 
 Workers are **host-agnostic**.  You can run one locally with a single command, and run the same code later in Azure Functions, AWS Lambda, a container or a scheduled task.  Only a thin host file changes.
 
+## Design decision: workers write to SharePoint lists
+
+Workers publish their results to SharePoint lists, and clients read those lists directly.  There's no API of our own in between.
+
+- **No separate API layer (for now).**  There's nothing to host, secure, scale or version between the data and its readers.  SharePoint provides storage, permissions, versioning and an editing UI.
+- **Every client can read it.**  The same list works through SharePoint REST and Microsoft Graph, with the user's own permissions:
+  - SPFx in the web client (e.g. the header ticker, through PnPJS)
+  - mobile apps
+  - Teams apps
+- **Writes stay narrow.**  Only the worker's app writes, with `Sites.Selected` on the one site.  Readers need only read access to that site.
+
+Revisit this decision when a client needs data a list can't serve well.  Examples: aggregation across many sources, high write volume, data that can't be exposed with list permissions, or business rules that shouldn't run in each client.  A worker's core logic is already behind interfaces, so an API can reuse it.
+
 ## Structure
 
 ```text
