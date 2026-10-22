@@ -52,7 +52,7 @@ The ticker reads the **first item (lowest ID)** of a SharePoint list once per pa
 | `Title` | Ticker | Single line of text (built-in, renamed) |
 | `LastClosePrice` | Last Close Price | Number, 2 decimals |
 | `CurrentPrice` | Current Price | Number, 2 decimals |
-| `CurrentPriceAsOfDate` | Current Price As Of | Single line of text holding an ISO 8601 string (e.g. `2026-10-21T20:00:00Z`), not a date/time field |
+| `CurrentPriceAsOfDate` | Current Price As Of | Single line of text holding the UTC time the price was retrieved, as ISO 8601 (e.g. `2026-10-21T20:00:00Z`), not a date/time field |
 
 Provision or update the list (safe to re-run; supports `-WhatIf`):
 

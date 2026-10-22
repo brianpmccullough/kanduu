@@ -2,7 +2,7 @@ import { loadConfig } from './config';
 
 const env = {
   STOCK_SYMBOLS: ' msft, kndu ,',
-  FINNHUB_API_KEY: 'key',
+  ALPHA_VANTAGE_API_KEY: 'key',
   SHAREPOINT_SITE_URL: 'https://contoso.sharepoint.com',
   TENANT_ID: 'tenant',
   CLIENT_ID: 'client',
@@ -13,13 +13,13 @@ describe('loadConfig', () => {
   it('reads and normalizes settings, with defaults', () => {
     expect(loadConfig(env)).toEqual({
       symbols: ['MSFT', 'KNDU'],
-      finnhubApiKey: 'key',
+      alphaVantageApiKey: 'key',
       siteUrl: 'https://contoso.sharepoint.com',
       listTitle: 'Stock Ticker',
       tenantId: 'tenant',
       clientId: 'client',
       clientSecret: 'secret',
-      refreshIntervalMinutes: 15
+      refreshIntervalMinutes: 60
     });
   });
 

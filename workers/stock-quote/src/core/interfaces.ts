@@ -4,11 +4,11 @@ export interface IMarketQuote {
   currentPrice: number;
   /** Previous close; undefined when the provider has none. */
   previousClose: number | undefined;
-  /** When the provider last updated the price. */
+  /** When the worker retrieved the quote. */
   asOf: Date;
 }
 
-/** A market data source (e.g. Finnhub). */
+/** A market data source (e.g. Alpha Vantage). */
 export interface IQuoteProvider {
   /** Throws when the symbol is unknown or the provider fails. */
   getQuote(symbol: string): Promise<IMarketQuote>;

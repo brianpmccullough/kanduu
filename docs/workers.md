@@ -35,15 +35,25 @@ The rules match the SPFx guardrails: logic sits behind interfaces, hosts stay th
 | Azure Functions | Timer trigger that calls `runXxx(process.env, context)`.  Needs the `@azure/functions` package (not yet approved). |
 | AWS Lambda | `export const handler = () => runXxx(process.env, console)`, scheduled with EventBridge.  Needs no package. |
 
-### Authentication to Microsoft 365
+### App registration (Microsoft 365 access)
 
-- Use an Entra ID app registration with the Microsoft Graph **`Sites.Selected`** application permission, granted **write** on only the site that the worker updates.  Don't use `Sites.ReadWrite.All`.
-- Locally, use a client secret (`ClientSecretTokenProvider`).  In the cloud, prefer a managed identity (Azure) or a certificate.  Add those as more `ITokenProvider` implementations when a host is chosen.
+Each worker that writes to SharePoint has its own Entra ID app registration:
 
-Grant the site with PnP.PowerShell (as a SharePoint admin):
+| Step | Setting | Who |
+| --- | --- | --- |
+| 1. Register | Entra ID → App registrations → New: single tenant, no redirect URI (e.g. `kanduu-stock-quote-worker`) | Application Administrator |
+| 2. Permission | API permissions → Microsoft Graph → **Application** → `Sites.Selected`.  No other permissions. | Application Administrator |
+| 3. Consent | Grant admin consent for the tenant | Global Administrator or Privileged Role Administrator |
+| 4. Site access | Grant **Write** on only the site that hosts the list (command below) | SharePoint Administrator |
+| 5. Credential | Locally, Certificates & secrets → new client secret.  Set an expiry and record when to rotate it.  In the cloud, prefer a managed identity or certificate. | App owner |
+| 6. Configure | `TENANT_ID` = Directory (tenant) ID, `CLIENT_ID` = Application (client) ID, `CLIENT_SECRET` = the secret **value** (not its ID) | App owner |
+
+`Sites.Selected` with no site grant has no access, so step 4 is required.  Add `ITokenProvider` implementations for managed identity or certificates when a host is chosen.
+
+Step 4 runs with PnP.PowerShell as a SharePoint admin.  The PnP sign-in app needs the Microsoft Graph `Sites.FullControl.All` permission.
 
 ```powershell
-Connect-PnPOnline -Url https://<tenant>.sharepoint.com -Interactive -ClientId <admin-app-client-id>
+Connect-PnPOnline -Url https://<tenant>.sharepoint.com -Interactive -ClientId <pnp-admin-app-client-id>
 Grant-PnPEntraIDAppSitePermission -AppId <worker-client-id> -DisplayName 'kanduu stock quote worker' `
     -Site https://<tenant>.sharepoint.com/sites/<site> -Permissions Write
 ```
@@ -52,12 +62,14 @@ Grant-PnPEntraIDAppSitePermission -AppId <worker-client-id> -DisplayName 'kanduu
 
 ### `stock-quote`
 
-Fetches quotes from [Finnhub](https://finnhub.io) and writes them to the Stock Ticker list that the header banner reads (see [customizers-global.md](customizers-global.md#stock-ticker)).
+Fetches quotes from [Alpha Vantage](https://www.alphavantage.co/documentation/#latestprice) (`GLOBAL_QUOTE`) and writes them to the Stock Ticker list that the header banner reads (see [customizers-global.md](customizers-global.md#stock-ticker)).
 
-- For each symbol in `STOCK_SYMBOLS`, it updates the item whose Ticker matches (case-insensitive), or creates one.  It sets `CurrentPrice`, `LastClosePrice` (Finnhub's previous close) and `CurrentPriceAsOfDate` (ISO 8601, Finnhub's quote time).
+- For each symbol in `STOCK_SYMBOLS`, it updates the item whose Ticker matches (case-insensitive), or creates one.  It sets `CurrentPrice`, `LastClosePrice` (Alpha Vantage's previous close) and `CurrentPriceAsOfDate`: the UTC time, in ISO 8601, at which the worker retrieved the quote.
 - A failure for one symbol is logged and doesn't stop the others.  `--once` exits with code 1 if any symbol failed.
 - The header shows the item with the lowest ID.  A new symbol is added as a new item, so the first symbol ever written stays on display.
-- **Market data terms:** free Finnhub plans and most other free APIs limit how their data can be displayed or redistributed.  Check the provider's terms before showing quotes to employees.  The provider sits behind `IQuoteProvider`, so it can be swapped.
+- **Rate limit:** a free Alpha Vantage key allows **25 requests a day**, and each symbol costs one request per refresh.  `REFRESH_INTERVAL_MINUTES` defaults to 60, which keeps one symbol at 24 a day.  `stock-quote:start` warns when the configuration would go over the limit.  Alpha Vantage reports limits and errors as an HTTP 200 with a message, which the worker logs as a failure.
+- **API key:** Alpha Vantage only accepts the key in the query string, so the worker never logs request URLs.  Keep the key in `.env` or the host's app settings.
+- **Market data terms:** free plans (Alpha Vantage included) generally limit how their data can be displayed or redistributed.  Check the provider's terms before showing quotes to employees.  The provider sits behind `IQuoteProvider`, so it can be swapped.
 
 ```bash
 cp workers/stock-quote/.env.example workers/stock-quote/.env   # then fill it in

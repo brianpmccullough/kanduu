@@ -8,7 +8,7 @@
         Ticker                (built-in Title field, renamed)
         LastClosePrice        Number, 2 decimals
         CurrentPrice          Number, 2 decimals
-        CurrentPriceAsOfDate  Single line of text, ISO 8601 (e.g. 2026-10-21T20:00:00Z)
+        CurrentPriceAsOfDate  Single line of text, UTC retrieval time as ISO 8601 (e.g. 2026-10-21T20:00:00Z)
 
     The list and missing fields are created; existing fields keep their type and data, and only their
     display name and description are re-applied.  The default view is reset to show the four
@@ -60,7 +60,7 @@ $fieldDefinitions = @(
     @{
         InternalName = 'CurrentPriceAsOfDate'
         Xml          = '<Field Type="Text" Name="CurrentPriceAsOfDate" StaticName="CurrentPriceAsOfDate" DisplayName="Current Price As Of" MaxLength="64" />'
-        Values       = @{ Title = 'Current Price As Of'; Description = 'When Current Price was updated, as an ISO 8601 string (e.g. 2026-10-21T20:00:00Z).' }
+        Values       = @{ Title = 'Current Price As Of'; Description = 'When Current Price was retrieved, in UTC, as an ISO 8601 string (e.g. 2026-10-21T20:00:00Z).' }
     }
 )
 $viewFields = @('Title') + ($fieldDefinitions | ForEach-Object { $_.InternalName })

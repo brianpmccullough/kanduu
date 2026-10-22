@@ -1,7 +1,7 @@
 import { loadConfig, type IStockQuoteConfig } from './config';
 import type { ILogger } from './core/interfaces';
 import { refreshStockQuotes, type IRefreshResult } from './core/refreshStockQuotes';
-import { FinnhubQuoteProvider } from './providers/FinnhubQuoteProvider';
+import { AlphaVantageQuoteProvider } from './providers/AlphaVantageQuoteProvider';
 import { ClientSecretTokenProvider } from './sharepoint/ClientSecretTokenProvider';
 import { GraphClient } from './sharepoint/GraphClient';
 import { GraphStockQuoteWriter } from './sharepoint/GraphStockQuoteWriter';
@@ -12,7 +12,7 @@ export * from './core/refreshStockQuotes';
 
 /** Builds the refresh from configuration.  The returned function can be called repeatedly. */
 export function createStockQuoteRefresh(config: IStockQuoteConfig, logger: ILogger): () => Promise<IRefreshResult> {
-  const provider = new FinnhubQuoteProvider(config.finnhubApiKey);
+  const provider = new AlphaVantageQuoteProvider(config.alphaVantageApiKey);
   const graph = new GraphClient(new ClientSecretTokenProvider(config.tenantId, config.clientId, config.clientSecret));
   const writer = new GraphStockQuoteWriter(graph, config.siteUrl, config.listTitle);
   return () => refreshStockQuotes(config.symbols, provider, writer, logger);

@@ -1,6 +1,6 @@
 export interface IStockQuoteConfig {
   symbols: string[];
-  finnhubApiKey: string;
+  alphaVantageApiKey: string;
   siteUrl: string;
   listTitle: string;
   tenantId: string;
@@ -11,7 +11,7 @@ export interface IStockQuoteConfig {
 
 const REQUIRED = [
   'STOCK_SYMBOLS',
-  'FINNHUB_API_KEY',
+  'ALPHA_VANTAGE_API_KEY',
   'SHAREPOINT_SITE_URL',
   'TENANT_ID',
   'CLIENT_ID',
@@ -30,14 +30,14 @@ export function loadConfig(env: Record<string, string | undefined>): IStockQuote
     throw new Error('STOCK_SYMBOLS has no symbols');
   }
 
-  const interval = Number(env.REFRESH_INTERVAL_MINUTES ?? 15);
+  const interval = Number(env.REFRESH_INTERVAL_MINUTES ?? 60);
   if (!Number.isFinite(interval) || interval <= 0) {
     throw new Error('REFRESH_INTERVAL_MINUTES must be a positive number');
   }
 
   return {
     symbols,
-    finnhubApiKey: env.FINNHUB_API_KEY!.trim(),
+    alphaVantageApiKey: env.ALPHA_VANTAGE_API_KEY!.trim(),
     siteUrl: env.SHAREPOINT_SITE_URL!.trim(),
     listTitle: env.STOCK_TICKER_LIST_TITLE?.trim() || 'Stock Ticker',
     tenantId: env.TENANT_ID!.trim(),
