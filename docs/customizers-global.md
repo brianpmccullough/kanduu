@@ -23,9 +23,13 @@ Renders a banner in the page's **Top** placeholder, colored with the site's prim
 | `components/HeaderBanner.tsx` | Banner layout; wraps everything in a Fluent `ThemeProvider` built from the SPFx theme |
 | `components/StockTicker.tsx` | First quote from the Stock Ticker list; see [Stock ticker](#stock-ticker) |
 | `components/stockTickerFormat.ts` | Locale-aware price, percent and date formatting |
-| `components/ProfileButton.tsx` | Stub: current user's `Persona`, no menu yet |
+| `components/headerCommands.ts` | Command model (`IHeaderCommand` → sections → links) and `toCommandBarItems`, which maps it to Fluent `CommandBar` items |
+| `components/defaultHeaderCommands.ts` | Sample intranet commands; see [Commands](#commands) |
+| `components/ProfileButton.tsx` | Current user's `Persona`; opens the profile popup.  See [Profile popup](#profile-popup) |
+| `components/ProfileCard.tsx` | Popup contents: the user's name and email, and their links |
+| `components/sampleUserLinks.ts` | Sample "My links" until users can personalize them |
 
-Layout: actions area (empty `CommandBar`) on the left, then on the right a stock ticker, a search box, a settings (gear) button and the profile.  The search box, gear and profile are stubs with no behavior yet.  The ticker is hidden below 640px.
+Layout: commands (`CommandBar`) on the left, then on the right a stock ticker, a search box, a settings (gear) button and the profile.  The search box and gear are stubs with no behavior yet.  The ticker is hidden below 640px; commands that don't fit move to the CommandBar's overflow ("More commands") menu.
 
 ### Properties
 
@@ -69,6 +73,30 @@ Behavior:
 - Nothing is rendered while loading, when the list is empty, when the first item has no `Ticker` or `CurrentPrice`, or when the request fails (logged as a warning).
 - Everyone who sees the header needs read access to the list.  When the list is on a central site, grant visitors read there.
 - The `stock-quote` worker keeps the list up to date.  See [workers.md](workers.md#stock-quote).
+
+## Commands
+
+Sample intranet commands, defined in `defaultHeaderCommands.ts`.  They are **stubs**: the links have no destinations yet, so choosing one only closes the menu.  Destinations (and possibly the commands themselves) will come from configuration once the target systems are known.
+
+| Command | Contents |
+| --- | --- |
+| I want to... | **Pay and time off**: get my pay slip, request time off, submit an expense report, update my personal details.  **Workplace**: book a meeting room, book travel, find a colleague.  **Get help**: report an IT issue, ask HR a question. |
+| Departments | Human Resources, Finance, IT, Facilities |
+| News | A single link |
+
+To add or change commands, edit `defaultHeaderCommands.ts` (text from `loc/` strings, icons from [Fluent UI MDL2 icons](https://developer.microsoft.com/en-us/fluentui#/styles/web/icons)).  A command with `sections` becomes a menu; each section is a group of links with an optional heading.  A link with an `href` navigates.  Items are styled with the banner's theme colors; their menus use the site theme.
+
+## Profile popup
+
+Selecting the profile picture opens a popup below it (`FocusTrapCallout`, `role="dialog"`) with:
+
+- the user's name and email (from the page context; no extra request)
+- **My links**: the user's links, which open in a new tab
+- a note that personalizing links is coming soon.
+
+Links come from an `IUserLinksService` (`@kanduu/spfx-shared`), loaded the first time the popup opens.  For now it is `StaticUserLinksService` with the sample links in `sampleUserLinks.ts` (Outlook, Teams, Microsoft 365, My apps, My account), so every user sees the same links.  Personal links will be a second implementation that reads and writes a JSON file in the app folder of the user's OneDrive (Microsoft Graph `/me/drive/special/approot`); the popup will not need to change.
+
+Keyboard: Enter or Space opens the popup and focus moves into it; Tab stays inside it; Escape or selecting outside closes it and focus returns to the button.
 
 ## Pattern: themed React UI from an application customizer
 

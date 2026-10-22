@@ -15,12 +15,15 @@ import {
 import {
   type IStockQuoteService,
   type IStockQuoteServiceOptions,
+  type IUserLinksService,
+  StaticUserLinksService,
   StockQuoteService
 } from '@kanduu/spfx-shared';
 
 import * as strings from 'HeaderApplicationCustomizerStrings';
 import HeaderBanner from './components/HeaderBanner';
 import type { IHeaderBannerProps } from './components/IHeaderBannerProps';
+import { getSampleUserLinks } from './components/sampleUserLinks';
 
 const LOG_SOURCE: string = 'HeaderApplicationCustomizer';
 
@@ -38,6 +41,7 @@ export default class HeaderApplicationCustomizer
   private _themeProvider: ThemeProvider | undefined;
   private _theme: IReadonlyTheme | undefined;
   private _stockQuoteService!: IStockQuoteService;
+  private _userLinksService!: IUserLinksService;
 
   public onInit(): Promise<void> {
     Log.info(LOG_SOURCE, `Initialized ${strings.Title}`);
@@ -47,6 +51,8 @@ export default class HeaderApplicationCustomizer
     this._themeProvider.themeChangedEvent.add(this, this._onThemeChanged);
 
     this._stockQuoteService = new StockQuoteService(this.context, this.properties.stockTicker);
+    // Sample links until users can personalize them (stored per user in OneDrive).
+    this._userLinksService = new StaticUserLinksService(getSampleUserLinks());
 
     this.context.placeholderProvider.changedEvent.add(this, this._render);
     this._render();
@@ -83,7 +89,8 @@ export default class HeaderApplicationCustomizer
       userDisplayName: user.displayName,
       userEmail: user.email,
       locale: cultureInfo.currentCultureName,
-      stockQuoteService: this._stockQuoteService
+      stockQuoteService: this._stockQuoteService,
+      userLinksService: this._userLinksService
     });
 
     ReactDom.render(element, this._topPlaceholder.domElement);
