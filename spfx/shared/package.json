@@ -11,6 +11,7 @@
   "author": "",
   "license": "ISC",
   "types": "lib/index.d.ts",
+  "sideEffects": false,
   "devDependencies": {
     "typescript": "~5.8.0"
   },
