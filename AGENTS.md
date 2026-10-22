@@ -12,6 +12,8 @@ This is an npm workspace monorepo ([npm workspaces](https://docs.npmjs.com/cli/v
 
 /spfx/shared - `@kanduu/spfx-shared`, plain TypeScript shared across SPFx packages (services, interfaces, models, utilities).  Reusable code goes here rather than being duplicated across packages.
 
+/scripts - PnP.PowerShell provisioning scripts (e.g. `Set-ApplicationCustomizer.ps1`) and their per-site JSON configurations in `/scripts/config`.  Extensions are activated with these scripts, not SPFx feature XML.
+
 /docs - contains reference documents for both humans and agents.  These should be updated as the solution(s) grow.
 
 There are no backend components here at this time.
@@ -25,6 +27,13 @@ There are no backend components here at this time.
 - @fluentui/react v8 (exact version: see package.json; [controls reference](https://developer.microsoft.com/en-us/fluentui#/controls/web))
 - [PnPJS](https://pnp.github.io/pnpjs/) 4.x for SharePoint / Microsoft Graph data access.
 
+## Provisioning Tech Stack
+
+- PowerShell 7.x (>= 7.4.6), not Windows PowerShell 5.1
+- [PnP.PowerShell](https://pnp.github.io/powershell/) 3.x
+- Extensions are activated per site by scripts in `/scripts` with JSON configurations in `/scripts/config`, NOT by SPFx feature XML (`sharepoint/assets/*.xml`, `features` in package-solution.json).  See /docs/application-customizers.md.
+- Scripts can be re-run safely (remove existing, then re-add), support `-WhatIf`, and declare their requirements with `#Requires`.
+
 ## Commands (run from repo root)
 
 - `npm run build` - build shared, then every SPFx package (production build; runs Jest tests via `heft test`)
@@ -37,12 +46,17 @@ There are no backend components here at this time.
 - Create it under `/spfx/<type>-<scope>` or `/spfx/<feature>` (e.g. `webparts-global`, `customizers-site`, `search`)
 - Add matching `<package>:build`, `<package>:clean`, `<package>:start` scripts to the root package.json
 - Decide and document deployment scope (tenant vs site, auto vs manually provisioned) in /docs
+- Remove the generated feature XML (`sharepoint/assets`) and `features` block; add a `/scripts/config` configuration for each extension instead
 
 ## Definition of done
 
 - `npm run build` succeeds (includes tests)
 - New/changed user-facing text exists in every `loc/` locale file
 - /docs updated when structure, packages, or patterns change
+
+## Commits
+
+- Follow [/docs/commit-message.md](docs/commit-message.md) (Conventional Commits types, imperative subject of 50 characters or less, body explains what and why).
 
 ## Do not modify
 
