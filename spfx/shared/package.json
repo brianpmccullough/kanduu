@@ -13,5 +13,8 @@
   "types": "lib/index.d.ts",
   "devDependencies": {
     "typescript": "~5.8.0"
+  },
+  "dependencies": {
+    "@pnp/sp": "^4.22.0"
   }
 }
