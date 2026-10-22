@@ -8,3 +8,4 @@ release/
 .rushstack/
 .heft/
 coverage/
+lib-commonjs/

@@ -40,6 +40,7 @@ There are no backend components here at this time.
 - `npm run <package>:build` - build shared + one package (e.g. `webparts-global:build`)
 - `npm run <package>:start` - build shared + serve one package locally
 - `npm run <package>:clean` - clean one package
+- `npm run shared:test` - run the `spfx/shared` Jest tests (also run by every build)
 
 ## Adding a new SPFx package
 

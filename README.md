@@ -62,6 +62,7 @@ npm run customizers-global:start
 - [docs/dependencies.md](docs/dependencies.md): approved dependencies
 - [docs/application-customizers.md](docs/application-customizers.md): provisioning application customizers
 - [docs/customizers-global.md](docs/customizers-global.md): the `customizers-global` package
+- [docs/shared.md](docs/shared.md): the `@kanduu/spfx-shared` package and its tests
 - [docs/commit-message.md](docs/commit-message.md): commit message and PR title conventions
 
 ## Contributing

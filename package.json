@@ -15,7 +15,8 @@
 
     "shared:build": "npm run build -w @kanduu/spfx-shared",
     "shared:clean": "npm run clean -w @kanduu/spfx-shared",
-    "shared:watch": "npm run build -w @kanduu/spfx-shared -- --watch",
+    "shared:test": "npm run test -w @kanduu/spfx-shared",
+    "shared:watch": "npm run watch -w @kanduu/spfx-shared",
 
     "customizers-global:build": "npm run shared:build && npm run build -w customizers-global",
     "customizers-global:clean": "npm run clean -w customizers-global",

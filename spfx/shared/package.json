@@ -5,14 +5,18 @@
   "description": "Shared client code for SPFx based solutions.",
   "main": "lib/index.js",
   "scripts": {
-    "build": "tsc",
-    "clean": "rm -rf lib"
+    "build": "npm run clean && tsc && npm test",
+    "clean": "rm -rf lib lib-commonjs",
+    "test": "tsc -p tsconfig.commonjs.json && jest",
+    "watch": "tsc --watch"
   },
   "author": "",
   "license": "ISC",
   "types": "lib/index.d.ts",
   "sideEffects": false,
   "devDependencies": {
+    "@types/jest": "30.0.0",
+    "jest": "30.3.0",
     "typescript": "~5.8.0"
   },
   "dependencies": {
