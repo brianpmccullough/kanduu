@@ -1,0 +1,9 @@
+{
+  "extends": "./tsconfig.json",
+  "compilerOptions": {
+    "declaration": false,
+    "outDir": "lib-commonjs",
+    "types": ["node", "jest"]
+  },
+  "exclude": []
+}

@@ -1,0 +1,5 @@
+{
+  "roots": ["<rootDir>/lib-commonjs"],
+  "testMatch": ["**/*.test.js"],
+  "testEnvironment": "node"
+}

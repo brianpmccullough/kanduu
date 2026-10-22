@@ -67,6 +67,7 @@ Use the workspace or area that the change targets:
 
 - an SPFx package folder name: `customizers-global`, `webparts-global`, `shared`
 - `scripts` for provisioning scripts and configurations
+- a worker folder name: `stock-quote`
 - `docs` is not needed as a scope; use the `docs` type instead.
 
 Leave the scope out when a change spans several areas.

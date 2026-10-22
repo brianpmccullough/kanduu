@@ -22,7 +22,7 @@ Why not feature XML:
 | --- | --- | --- |
 | PowerShell | 7.4.6 or later (7.x) | [Install PowerShell](https://learn.microsoft.com/powershell/scripting/install/installing-powershell) |
 | PnP.PowerShell | 3.x | `Install-Module PnP.PowerShell -Scope CurrentUser` / `Update-Module PnP.PowerShell` |
-| Entra ID app registration | — | Required by PnP.PowerShell for interactive sign-in (`-ClientId`).  See [Register an Entra ID application](https://pnp.github.io/powershell/articles/registerapplication.html). |
+| Entra ID app registration | — | Required by PnP.PowerShell for interactive sign-in.  See [Register an Entra ID application](https://pnp.github.io/powershell/articles/registerapplication.html). |
 
 The scripts declare these requirements with `#Requires` and will not start on older versions.
 
@@ -30,7 +30,13 @@ The scripts declare these requirements with `#Requires` and will not start on ol
 
 ```powershell
 ./scripts/Set-ApplicationCustomizer.ps1 -SiteUrl https://<tenant>.sharepoint.com/sites/<site> `
-    -ConfigPath ./scripts/config/header.default.json -ClientId <entra-app-client-id>
+    -ConfigPath ./scripts/config/header.default.json
+```
+
+`-ClientId` is optional in every script.  When it's left out, PnP.PowerShell uses its [default client ID](https://pnp.github.io/powershell/articles/defaultclientid.html): the `ENTRAID_APP_ID`, `ENTRAID_CLIENT_ID` or `AZURE_CLIENT_ID` environment variable, or a `Set-PnPManagedAppId` entry for the tenant.  Set one in your PowerShell profile, for example:
+
+```powershell
+$env:ENTRAID_APP_ID = '<entra-app-client-id>'
 ```
 
 The script can be run again safely.  It:
@@ -50,7 +56,12 @@ Use `-WhatIf` to see what would change without changing anything.
   "clientSideComponentId": "003d0b35-944d-424f-ab09-b53f62618e53",
   "scope": "Site",
   "sequence": 0,
-  "properties": {}
+  "properties": {
+    "stockTicker": {
+      "siteUrl": "https://mmcbpm.sharepoint.com",
+      "listTitle": "Stock Ticker"
+    }
+  }
 }
 ```
 

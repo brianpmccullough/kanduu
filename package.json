@@ -4,7 +4,8 @@
   "private": true,
   "description": "M365 extensibility for kanduu digital workplace.",
   "workspaces": [
-    "spfx/*"
+    "spfx/*",
+    "workers/*"
   ],
   "scripts": {
     "build": "npm run shared:build && npm run build --workspaces --if-present",
@@ -15,7 +16,8 @@
 
     "shared:build": "npm run build -w @kanduu/spfx-shared",
     "shared:clean": "npm run clean -w @kanduu/spfx-shared",
-    "shared:watch": "npm run build -w @kanduu/spfx-shared -- --watch",
+    "shared:test": "npm run test -w @kanduu/spfx-shared",
+    "shared:watch": "npm run watch -w @kanduu/spfx-shared",
 
     "customizers-global:build": "npm run shared:build && npm run build -w customizers-global",
     "customizers-global:clean": "npm run clean -w customizers-global",
@@ -23,7 +25,13 @@
     
     "webparts-global:build": "npm run shared:build && npm run build -w webparts-global",
     "webparts-global:clean": "npm run clean -w webparts-global",
-    "webparts-global:start": "npm run shared:build && npm run start -w webparts-global"
+    "webparts-global:start": "npm run shared:build && npm run start -w webparts-global",
+
+    "stock-quote:build": "npm run build -w @kanduu/worker-stock-quote",
+    "stock-quote:clean": "npm run clean -w @kanduu/worker-stock-quote",
+    "stock-quote:test": "npm run test -w @kanduu/worker-stock-quote",
+    "stock-quote:start": "npm run build -w @kanduu/worker-stock-quote && npm run start -w @kanduu/worker-stock-quote",
+    "stock-quote:once": "npm run build -w @kanduu/worker-stock-quote && npm run once -w @kanduu/worker-stock-quote"
 
   }
 }

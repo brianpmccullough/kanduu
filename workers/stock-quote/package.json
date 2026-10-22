@@ -1,0 +1,24 @@
+{
+  "name": "@kanduu/worker-stock-quote",
+  "version": "0.1.0",
+  "private": true,
+  "description": "Refreshes the Stock Ticker SharePoint list from a stock quote API.",
+  "engines": {
+    "node": ">=22.14.0 <23.0.0"
+  },
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "scripts": {
+    "build": "npm run clean && tsc && npm test",
+    "clean": "rm -rf dist lib-commonjs",
+    "test": "tsc -p tsconfig.test.json && jest",
+    "start": "node --env-file-if-exists=.env dist/hosts/cli.js",
+    "once": "node --env-file-if-exists=.env dist/hosts/cli.js --once"
+  },
+  "devDependencies": {
+    "@types/jest": "30.0.0",
+    "@types/node": "^22.14.0",
+    "jest": "30.3.0",
+    "typescript": "~5.8.0"
+  }
+}
