@@ -38,6 +38,26 @@ describe('toCommandBarItems', () => {
     expect(link).toMatchObject({ target: '_blank', rel: 'noopener noreferrer' });
   });
 
+  it('maps links with sections to nested submenus', () => {
+    const [brands] = toCommandBarItems([{
+      key: 'brands',
+      text: 'Our brands',
+      sections: [{
+        key: 'brands',
+        links: [{
+          key: 'contoso',
+          text: 'Contoso',
+          sections: [{ key: 'contoso', title: 'Contoso', links: [{ key: 'web', text: 'Website', href: 'https://contoso.com' }] }]
+        }]
+      }]
+    }]);
+    const contoso = brands.subMenuProps?.items[0].sectionProps?.items[0];
+    const nested = contoso?.subMenuProps?.items[0].sectionProps;
+
+    expect(contoso).toMatchObject({ key: 'contoso', text: 'Contoso', href: undefined });
+    expect(nested).toMatchObject({ title: 'Contoso', items: [{ key: 'web', href: 'https://contoso.com' }] });
+  });
+
   it('applies the button styles to every top-level item', () => {
     const buttonStyles = { root: { backgroundColor: 'transparent' } };
     expect(toCommandBarItems(commands, buttonStyles).every((item) => item.buttonStyles === buttonStyles)).toBe(true);

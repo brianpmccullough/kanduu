@@ -22,7 +22,13 @@ declare interface IHeaderApplicationCustomizerStrings {
   CommandDepartmentIt: string;
   CommandDepartmentFacilities: string;
   CommandNews: string;
-  CommandSocials: string;
+  CommandOurBrands: string;
+  BrandMicrosoft: string;
+  BrandXbox: string;
+  BrandLinkedIn: string;
+  BrandMicrosoft365: string;
+  BrandAzure: string;
+  BrandCopilot: string;
   SocialLinkedIn: string;
   SocialYouTube: string;
   SocialFacebook: string;
