@@ -75,7 +75,7 @@ if ($ClientId) {
 }
 Connect-PnPOnline @connectArgs
 
-$list = Get-PnPList -Identity $ListTitle
+$list = Get-PnPList -Identity $ListTitle -ErrorAction 0
 if (-not $list) {
     if (-not $PSCmdlet.ShouldProcess($SiteUrl, "Create list '$ListTitle'")) {
         Write-Host "List '$ListTitle' does not exist; skipping field and view changes."
