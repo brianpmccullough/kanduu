@@ -80,6 +80,12 @@ Use `-WhatIf` to see what would change without changing anything.
 | `sequence` | no | Order relative to other customizers (default `0`) |
 | `properties` | no | Serialized to `ClientSideComponentProperties`; must match the customizer's `I<Name>ApplicationCustomizerProperties` interface |
 
+When you add or change a customizer property, update all three places together:
+
+1. the `I<Name>ApplicationCustomizerProperties` interface (with its defaults)
+2. `properties` in each `/scripts/config/*.json` that registers the customizer, used by deployed sites
+3. `properties` under each `serveConfigurations` entry in the package's `config/serve.json`, used by `npm run <package>:start` and the debug URL (`?debugManifestsFile=...&customActions=...`).  Debug sessions don't read `/scripts/config`, so a property missing here falls back to its default, often the current site.  Values can differ for debugging, e.g. `cacheExpiryMinutes: 0` so edits show at once.
+
 Name configuration files `<customizer>.<variant>.json`, for example `header.default.json` for most sites and `header.hr.json` for a site that needs different properties.
 
 ## Adding a new application customizer
