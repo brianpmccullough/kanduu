@@ -13,6 +13,26 @@
   color: "[theme:white, default: #ffffff]";
 }
 
+.logo {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex: 0 0 auto;
+}
+
+.logoMark {
+  display: block;
+  width: 28px;
+  height: 28px;
+  border-radius: 2px;
+}
+
+.logoWordmark {
+  @include ms-font-xl;
+  font-weight: $ms-font-weight-semibold;
+  white-space: nowrap;
+}
+
 .actions {
   flex: 1 1 auto;
   min-width: 0;
@@ -132,6 +152,10 @@
 }
 
 @media (max-width: 639px) {
+  .logoWordmark {
+    display: none;
+  }
+
   .ticker {
     display: none;
   }

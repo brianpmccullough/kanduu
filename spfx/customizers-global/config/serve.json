@@ -7,7 +7,19 @@
       "pageUrl": "https://{tenantDomain}",
       "customActions": {
         "003d0b35-944d-424f-ab09-b53f62618e53": {
-          "location": "ClientSideExtension.ApplicationCustomizer"
+          "location": "ClientSideExtension.ApplicationCustomizer",
+          "properties": {
+            "headerMenu": {
+              "siteUrl": "https://mmcbpm.sharepoint.com",
+              "libraryTitle": "Header Menu",
+              "fileName": "header-menu.json",
+              "cacheExpiryMinutes": 0
+            },
+            "stockTicker": {
+              "siteUrl": "https://mmcbpm.sharepoint.com",
+              "listTitle": "Stock Ticker"
+            }
+          }
         }
       }
     },
@@ -15,7 +27,19 @@
       "pageUrl": "https://{tenantDomain}",
       "customActions": {
         "003d0b35-944d-424f-ab09-b53f62618e53": {
-          "location": "ClientSideExtension.ApplicationCustomizer"
+          "location": "ClientSideExtension.ApplicationCustomizer",
+          "properties": {
+            "headerMenu": {
+              "siteUrl": "https://mmcbpm.sharepoint.com",
+              "libraryTitle": "Header Menu",
+              "fileName": "header-menu.json",
+              "cacheExpiryMinutes": 0
+            },
+            "stockTicker": {
+              "siteUrl": "https://mmcbpm.sharepoint.com",
+              "listTitle": "Stock Ticker"
+            }
+          }
         }
       }
     }

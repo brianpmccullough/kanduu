@@ -13,6 +13,12 @@ import {
 } from '@microsoft/sp-component-base';
 
 import {
+  BrowserStorageCache,
+  getBrowserStorage,
+  getPageTranslationLanguage,
+  HeaderMenuService,
+  type IHeaderMenuService,
+  type IHeaderMenuServiceOptions,
   type IStockQuoteService,
   type IStockQuoteServiceOptions,
   type IUserLinksService,
@@ -29,6 +35,11 @@ const LOG_SOURCE: string = 'HeaderApplicationCustomizer';
 
 /** ClientSideComponentProperties for the header (set in /scripts/config/header.*.json). */
 export interface IHeaderApplicationCustomizerProperties {
+  /**
+   * Menu JSON location (defaults to header-menu.json in the "Header Menu" library on the current site)
+   * and how long browsers cache it.
+   */
+  headerMenu?: IHeaderMenuServiceOptions;
   /** Stock ticker list location; defaults to the "Stock Ticker" list on the current site. */
   stockTicker?: IStockQuoteServiceOptions;
 }
@@ -40,6 +51,7 @@ export default class HeaderApplicationCustomizer
   private _topPlaceholder: PlaceholderContent | undefined;
   private _themeProvider: ThemeProvider | undefined;
   private _theme: IReadonlyTheme | undefined;
+  private _headerMenuService!: IHeaderMenuService;
   private _stockQuoteService!: IStockQuoteService;
   private _userLinksService!: IUserLinksService;
 
@@ -50,11 +62,17 @@ export default class HeaderApplicationCustomizer
     this._theme = this._themeProvider.tryGetTheme();
     this._themeProvider.themeChangedEvent.add(this, this._onThemeChanged);
 
+    // One cache for the extension's data; entries share the "kanduu:" prefix in localStorage.
+    const cache = new BrowserStorageCache(getBrowserStorage('local'));
+    cache.purgeExpired();
+    this._headerMenuService = new HeaderMenuService(this.context, this.properties.headerMenu, cache);
     this._stockQuoteService = new StockQuoteService(this.context, this.properties.stockTicker);
     // Sample links until users can personalize them (stored per user in OneDrive).
     this._userLinksService = new StaticUserLinksService(getSampleUserLinks());
 
     this.context.placeholderProvider.changedEvent.add(this, this._render);
+    // The header stays loaded across in-page navigation; each page can be a different translation.
+    this.context.application.navigatedEvent.add(this, this._render);
     this._render();
 
     return Promise.resolve();
@@ -62,6 +80,7 @@ export default class HeaderApplicationCustomizer
 
   public onDispose(): void {
     this._themeProvider?.themeChangedEvent.remove(this, this._onThemeChanged);
+    this.context.application.navigatedEvent.remove(this, this._render);
     this._unmount();
   }
 
@@ -84,11 +103,16 @@ export default class HeaderApplicationCustomizer
     }
 
     const { user, cultureInfo } = this.context.pageContext;
+    // Menu text: a translated page's language first, then the user's.
+    const pageLanguage = getPageTranslationLanguage(window.location.pathname);
+    const menuLocales = [pageLanguage, cultureInfo.currentUICultureName].filter((locale): locale is string => !!locale);
     const element: React.ReactElement<IHeaderBannerProps> = React.createElement(HeaderBanner, {
       theme: this._theme,
       userDisplayName: user.displayName,
       userEmail: user.email,
       locale: cultureInfo.currentCultureName,
+      menuLocales,
+      headerMenuService: this._headerMenuService,
       stockQuoteService: this._stockQuoteService,
       userLinksService: this._userLinksService
     });

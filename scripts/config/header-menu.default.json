@@ -1,0 +1,651 @@
+{
+  "$comment": "Header menu for the customizers-global header.  Upload with scripts/Set-HeaderMenu.ps1.  See docs/customizers-global.md#menu-json.",
+  "version": 1,
+  "commands": [
+    {
+      "key": "ourBrands",
+      "text": {
+        "default": "Our brands",
+        "fr": "Nos marques"
+      },
+      "iconName": "Tag",
+      "sections": [
+        {
+          "key": "brands",
+          "links": [
+            {
+              "key": "microsoft",
+              "text": "Microsoft",
+              "sections": [
+                {
+                  "key": "microsoftSocials",
+                  "title": "Microsoft",
+                  "links": [
+                    {
+                      "key": "microsoft-linkedIn",
+                      "text": "LinkedIn",
+                      "iconName": "BrandLinkedIn",
+                      "href": "https://www.linkedin.com/company/microsoft/",
+                      "openInNewTab": true
+                    },
+                    {
+                      "key": "microsoft-youTube",
+                      "text": "YouTube",
+                      "iconName": "BrandYouTube",
+                      "href": "https://www.youtube.com/@Microsoft",
+                      "openInNewTab": true
+                    },
+                    {
+                      "key": "microsoft-facebook",
+                      "text": "Facebook",
+                      "iconName": "BrandFacebook",
+                      "href": "https://www.facebook.com/Microsoft",
+                      "openInNewTab": true
+                    },
+                    {
+                      "key": "microsoft-instagram",
+                      "text": "Instagram",
+                      "iconName": "BrandInstagram",
+                      "href": "https://www.instagram.com/microsoft/",
+                      "openInNewTab": true
+                    },
+                    {
+                      "key": "microsoft-x",
+                      "text": "X (Twitter)",
+                      "iconName": "BrandX",
+                      "href": "https://x.com/Microsoft",
+                      "openInNewTab": true
+                    }
+                  ]
+                },
+                {
+                  "key": "microsoftWebsite",
+                  "links": [
+                    {
+                      "key": "microsoft-website",
+                      "text": "Public website",
+                      "iconName": "Globe",
+                      "href": "https://www.microsoft.com/",
+                      "openInNewTab": true
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "key": "xbox",
+              "text": "Xbox",
+              "sections": [
+                {
+                  "key": "xboxSocials",
+                  "title": "Xbox",
+                  "links": [
+                    {
+                      "key": "xbox-linkedIn",
+                      "text": "LinkedIn",
+                      "iconName": "BrandLinkedIn",
+                      "href": "https://www.linkedin.com/company/xbox/",
+                      "openInNewTab": true
+                    },
+                    {
+                      "key": "xbox-youTube",
+                      "text": "YouTube",
+                      "iconName": "BrandYouTube",
+                      "href": "https://www.youtube.com/@Xbox",
+                      "openInNewTab": true
+                    },
+                    {
+                      "key": "xbox-facebook",
+                      "text": "Facebook",
+                      "iconName": "BrandFacebook",
+                      "href": "https://www.facebook.com/Xbox",
+                      "openInNewTab": true
+                    },
+                    {
+                      "key": "xbox-instagram",
+                      "text": "Instagram",
+                      "iconName": "BrandInstagram",
+                      "href": "https://www.instagram.com/xbox/",
+                      "openInNewTab": true
+                    },
+                    {
+                      "key": "xbox-x",
+                      "text": "X (Twitter)",
+                      "iconName": "BrandX",
+                      "href": "https://x.com/Xbox",
+                      "openInNewTab": true
+                    }
+                  ]
+                },
+                {
+                  "key": "xboxWebsite",
+                  "links": [
+                    {
+                      "key": "xbox-website",
+                      "text": "Public website",
+                      "iconName": "Globe",
+                      "href": "https://www.xbox.com/",
+                      "openInNewTab": true
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "key": "linkedIn",
+              "text": "LinkedIn",
+              "sections": [
+                {
+                  "key": "linkedInSocials",
+                  "title": "LinkedIn",
+                  "links": [
+                    {
+                      "key": "linkedIn-linkedIn",
+                      "text": "LinkedIn",
+                      "iconName": "BrandLinkedIn",
+                      "href": "https://www.linkedin.com/company/linkedin/",
+                      "openInNewTab": true
+                    },
+                    {
+                      "key": "linkedIn-youTube",
+                      "text": "YouTube",
+                      "iconName": "BrandYouTube",
+                      "href": "https://www.youtube.com/@LinkedIn",
+                      "openInNewTab": true
+                    },
+                    {
+                      "key": "linkedIn-facebook",
+                      "text": "Facebook",
+                      "iconName": "BrandFacebook",
+                      "href": "https://www.facebook.com/LinkedIn",
+                      "openInNewTab": true
+                    },
+                    {
+                      "key": "linkedIn-instagram",
+                      "text": "Instagram",
+                      "iconName": "BrandInstagram",
+                      "href": "https://www.instagram.com/linkedin/",
+                      "openInNewTab": true
+                    },
+                    {
+                      "key": "linkedIn-x",
+                      "text": "X (Twitter)",
+                      "iconName": "BrandX",
+                      "href": "https://x.com/LinkedIn",
+                      "openInNewTab": true
+                    }
+                  ]
+                },
+                {
+                  "key": "linkedInWebsite",
+                  "links": [
+                    {
+                      "key": "linkedIn-website",
+                      "text": "Public website",
+                      "iconName": "Globe",
+                      "href": "https://www.linkedin.com/",
+                      "openInNewTab": true
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "key": "microsoft365",
+              "text": "Microsoft 365",
+              "sections": [
+                {
+                  "key": "microsoft365Socials",
+                  "title": "Microsoft 365",
+                  "links": [
+                    {
+                      "key": "microsoft365-facebook",
+                      "text": "Facebook",
+                      "iconName": "BrandFacebook",
+                      "href": "https://www.facebook.com/Microsoft365",
+                      "openInNewTab": true
+                    },
+                    {
+                      "key": "microsoft365-instagram",
+                      "text": "Instagram",
+                      "iconName": "BrandInstagram",
+                      "href": "https://www.instagram.com/microsoft365/",
+                      "openInNewTab": true
+                    },
+                    {
+                      "key": "microsoft365-x",
+                      "text": "X (Twitter)",
+                      "iconName": "BrandX",
+                      "href": "https://x.com/Microsoft365",
+                      "openInNewTab": true
+                    }
+                  ]
+                },
+                {
+                  "key": "microsoft365Website",
+                  "links": [
+                    {
+                      "key": "microsoft365-website",
+                      "text": "Public website",
+                      "iconName": "Globe",
+                      "href": "https://www.microsoft.com/microsoft-365",
+                      "openInNewTab": true
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "key": "azure",
+              "text": "Azure",
+              "sections": [
+                {
+                  "key": "azureSocials",
+                  "title": "Azure",
+                  "links": [
+                    {
+                      "key": "azure-linkedIn",
+                      "text": "LinkedIn",
+                      "iconName": "BrandLinkedIn",
+                      "href": "https://www.linkedin.com/showcase/microsoft-azure/",
+                      "openInNewTab": true
+                    },
+                    {
+                      "key": "azure-youTube",
+                      "text": "YouTube",
+                      "iconName": "BrandYouTube",
+                      "href": "https://www.youtube.com/@MicrosoftAzure",
+                      "openInNewTab": true
+                    },
+                    {
+                      "key": "azure-facebook",
+                      "text": "Facebook",
+                      "iconName": "BrandFacebook",
+                      "href": "https://www.facebook.com/microsoftazure",
+                      "openInNewTab": true
+                    },
+                    {
+                      "key": "azure-x",
+                      "text": "X (Twitter)",
+                      "iconName": "BrandX",
+                      "href": "https://x.com/Azure",
+                      "openInNewTab": true
+                    }
+                  ]
+                },
+                {
+                  "key": "azureWebsite",
+                  "links": [
+                    {
+                      "key": "azure-website",
+                      "text": "Public website",
+                      "iconName": "Globe",
+                      "href": "https://azure.microsoft.com/",
+                      "openInNewTab": true
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "key": "copilot",
+              "text": "Copilot",
+              "sections": [
+                {
+                  "key": "copilotSocials",
+                  "title": "Copilot",
+                  "links": [
+                    {
+                      "key": "copilot-linkedIn",
+                      "text": "LinkedIn",
+                      "iconName": "BrandLinkedIn",
+                      "href": "https://www.linkedin.com/showcase/microsoftcopilot/",
+                      "openInNewTab": true
+                    }
+                  ]
+                },
+                {
+                  "key": "copilotWebsite",
+                  "links": [
+                    {
+                      "key": "copilot-website",
+                      "text": "Public website",
+                      "iconName": "Globe",
+                      "href": "https://copilot.microsoft.com/",
+                      "openInNewTab": true
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "key": "hubs",
+      "text": {
+        "default": "Hubs",
+        "fr": "Pôles"
+      },
+      "iconName": "Org",
+      "sections": [
+        {
+          "key": "hubs",
+          "links": [
+            {
+              "key": "hr",
+              "text": "Human Resources",
+              "iconName": "Group"
+            },
+            {
+              "key": "finance",
+              "text": "Finance",
+              "iconName": "Bank"
+            },
+            {
+              "key": "it",
+              "text": "IT",
+              "iconName": "Processing"
+            },
+            {
+              "key": "facilities",
+              "text": "Facilities",
+              "iconName": "CityNext"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "key": "workingHere",
+      "text": {
+        "default": "Working here",
+        "fr": "Travailler ici"
+      },
+      "iconName": "Suitcase",
+      "sections": [
+        {
+          "key": "careers",
+          "title": "Careers",
+          "links": [
+            {
+              "key": "jobPostings",
+              "text": "Browse job postings",
+              "iconName": "Search"
+            },
+            {
+              "key": "careerPaths",
+              "text": "Explore career paths",
+              "iconName": "Rocket"
+            },
+            {
+              "key": "mentoring",
+              "text": "Find a mentor",
+              "iconName": "Teamwork"
+            },
+            {
+              "key": "referCandidate",
+              "text": "Refer a candidate",
+              "iconName": "AddFriend"
+            }
+          ]
+        },
+        {
+          "key": "learning",
+          "title": "Learning",
+          "links": [
+            {
+              "key": "learningCatalog",
+              "text": "Learning catalog",
+              "iconName": "Education"
+            },
+            {
+              "key": "requiredTraining",
+              "text": "My required training",
+              "iconName": "Certificate"
+            },
+            {
+              "key": "leadership",
+              "text": "Leadership development",
+              "iconName": "Ribbon"
+            }
+          ]
+        },
+        {
+          "key": "lifeHere",
+          "title": "Life here",
+          "links": [
+            {
+              "key": "benefits",
+              "text": "Benefits",
+              "iconName": "Heart"
+            },
+            {
+              "key": "wellbeing",
+              "text": "Wellbeing",
+              "iconName": "Running"
+            },
+            {
+              "key": "recognition",
+              "text": "Recognize a colleague",
+              "iconName": "Medal"
+            },
+            {
+              "key": "communities",
+              "text": "Employee communities",
+              "iconName": "Group"
+            },
+            {
+              "key": "handbook",
+              "text": "Employee handbook",
+              "iconName": "Library"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "key": "news",
+      "text": {
+        "default": "News",
+        "fr": "Actualités"
+      },
+      "iconName": "News",
+      "sections": [
+        {
+          "key": "allNews",
+          "links": [
+            {
+              "key": "latestNews",
+              "text": "Latest news",
+              "iconName": "News"
+            }
+          ]
+        },
+        {
+          "key": "newsFilters",
+          "links": [
+            {
+              "key": "newsByBrand",
+              "text": "By brand",
+              "iconName": "Tag",
+              "sections": [
+                {
+                  "key": "newsByBrandFilters",
+                  "links": [
+                    {
+                      "key": "newsByBrand-microsoft",
+                      "text": "Microsoft"
+                    },
+                    {
+                      "key": "newsByBrand-xbox",
+                      "text": "Xbox"
+                    },
+                    {
+                      "key": "newsByBrand-linkedIn",
+                      "text": "LinkedIn"
+                    },
+                    {
+                      "key": "newsByBrand-microsoft365",
+                      "text": "Microsoft 365"
+                    },
+                    {
+                      "key": "newsByBrand-azure",
+                      "text": "Azure"
+                    },
+                    {
+                      "key": "newsByBrand-copilot",
+                      "text": "Copilot"
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "key": "newsByGeography",
+              "text": "By geography",
+              "iconName": "Globe",
+              "sections": [
+                {
+                  "key": "newsByGeographyFilters",
+                  "links": [
+                    {
+                      "key": "newsByGeography-northAmerica",
+                      "text": "North America"
+                    },
+                    {
+                      "key": "newsByGeography-latinAmerica",
+                      "text": "Latin America"
+                    },
+                    {
+                      "key": "newsByGeography-europe",
+                      "text": "Europe"
+                    },
+                    {
+                      "key": "newsByGeography-middleEastAfrica",
+                      "text": "Middle East and Africa"
+                    },
+                    {
+                      "key": "newsByGeography-asiaPacific",
+                      "text": "Asia Pacific"
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "key": "newsByRole",
+              "text": "By role",
+              "iconName": "People",
+              "sections": [
+                {
+                  "key": "newsByRoleFilters",
+                  "links": [
+                    {
+                      "key": "newsByRole-sales",
+                      "text": "Sales"
+                    },
+                    {
+                      "key": "newsByRole-finance",
+                      "text": "Finance"
+                    },
+                    {
+                      "key": "newsByRole-hr",
+                      "text": "Human Resources"
+                    },
+                    {
+                      "key": "newsByRole-technology",
+                      "text": "Technology"
+                    },
+                    {
+                      "key": "newsByRole-delivery",
+                      "text": "Delivery"
+                    },
+                    {
+                      "key": "newsByRole-clientFacing",
+                      "text": "Client facing"
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "key": "iWantTo",
+      "text": {
+        "default": "I want to...",
+        "fr": "Je veux..."
+      },
+      "iconName": "Lightbulb",
+      "sections": [
+        {
+          "key": "payAndTimeOff",
+          "title": "Pay and time off",
+          "links": [
+            {
+              "key": "paySlip",
+              "text": "Get my pay slip",
+              "iconName": "Money"
+            },
+            {
+              "key": "timeOff",
+              "text": "Request time off",
+              "iconName": "Vacation"
+            },
+            {
+              "key": "expenses",
+              "text": "Submit an expense report",
+              "iconName": "ReceiptCheck"
+            },
+            {
+              "key": "personalDetails",
+              "text": "Update my personal details",
+              "iconName": "ContactCard"
+            }
+          ]
+        },
+        {
+          "key": "workplace",
+          "title": "Workplace",
+          "links": [
+            {
+              "key": "bookRoom",
+              "text": "Book a meeting room",
+              "iconName": "Room"
+            },
+            {
+              "key": "bookTravel",
+              "text": "Book travel",
+              "iconName": "Airplane"
+            },
+            {
+              "key": "findColleague",
+              "text": "Find a colleague",
+              "iconName": "People"
+            }
+          ]
+        },
+        {
+          "key": "support",
+          "title": "Get help",
+          "links": [
+            {
+              "key": "itIssue",
+              "text": "Report an IT issue",
+              "iconName": "Repair"
+            },
+            {
+              "key": "askHr",
+              "text": "Ask HR a question",
+              "iconName": "Communications"
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

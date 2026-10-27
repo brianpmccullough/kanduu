@@ -1,4 +1,5 @@
 import * as React from 'react';
+import { Log } from '@microsoft/sp-core-library';
 import {
   CommandBar,
   createTheme,
@@ -11,15 +12,18 @@ import {
   SearchBox,
   ThemeProvider
 } from '@fluentui/react';
+import type { IHeaderMenuLink } from '@kanduu/spfx-shared';
 
 import * as strings from 'HeaderApplicationCustomizerStrings';
 import { registerBrandIcons } from './brandIcons';
-import { getDefaultHeaderCommands } from './defaultHeaderCommands';
 import styles from './HeaderBanner.module.scss';
 import { toCommandBarItems } from './headerCommands';
+import HeaderLogo from './HeaderLogo';
 import type { IHeaderBannerProps } from './IHeaderBannerProps';
 import ProfileButton from './ProfileButton';
 import StockTicker from './StockTicker';
+
+const LOG_SOURCE: string = 'HeaderBanner';
 
 initializeIcons();
 registerBrandIcons();
@@ -29,8 +33,20 @@ registerBrandIcons();
  * SPFx site theme so any menus, panels and dialogs added here pick up the site theme.
  */
 const HeaderBanner: React.FC<IHeaderBannerProps> = ({
-  theme, userDisplayName, userEmail, locale, stockQuoteService, userLinksService
+  theme, userDisplayName, userEmail, locale, menuLocales, headerMenuService, stockQuoteService, userLinksService
 }) => {
+  const [commands, setCommands] = React.useState<IHeaderMenuLink[]>([]);
+
+  // Re-read only when the languages change (a new array arrives on every render).
+  const menuLocalesKey = menuLocales.join('|');
+  React.useEffect(() => {
+    let isMounted = true;
+    headerMenuService.getCommands(menuLocalesKey.split('|').filter(Boolean))
+      .then((result) => { if (isMounted) { setCommands(result); } })
+      .catch((error: Error) => Log.warn(LOG_SOURCE, `Unable to load header menu: ${error.message}`));
+    return () => { isMounted = false; };
+  }, [headerMenuService, menuLocalesKey]);
+
   const fluentTheme: ITheme = React.useMemo(
     () => createTheme(theme as IPartialTheme | undefined),
     [theme]
@@ -66,12 +82,13 @@ const HeaderBanner: React.FC<IHeaderBannerProps> = ({
       menuIconPressed: onBanner,
       menuIconExpanded: onBanner
     };
-    return toCommandBarItems(getDefaultHeaderCommands(), buttonStyles);
-  }, [primaryButtonText, themeDark, themeDarker]);
+    return toCommandBarItems(commands, buttonStyles);
+  }, [commands, primaryButtonText, themeDark, themeDarker]);
 
   return (
     <ThemeProvider theme={fluentTheme}>
       <header className={styles.headerBanner} style={bannerStyle} aria-label={strings.BannerAriaLabel}>
+        <HeaderLogo />
         <div className={styles.actions}>
           <CommandBar
             items={commandItems}

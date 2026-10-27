@@ -58,6 +58,12 @@ describe('toCommandBarItems', () => {
     expect(nested).toMatchObject({ title: 'Contoso', items: [{ key: 'web', href: 'https://contoso.com' }] });
   });
 
+  it('shows a custom image instead of the icon', () => {
+    const image = 'data:image/png;base64,iVBORw0KGgo=';
+    const [item] = toCommandBarItems([{ key: 'intranet', text: 'Intranet', iconName: 'Home', image }]);
+    expect(item.iconProps).toEqual({ imageProps: { src: image, alt: '', width: 16, height: 16 } });
+  });
+
   it('applies the button styles to every top-level item', () => {
     const buttonStyles = { root: { backgroundColor: 'transparent' } };
     expect(toCommandBarItems(commands, buttonStyles).every((item) => item.buttonStyles === buttonStyles)).toBe(true);
