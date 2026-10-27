@@ -57,6 +57,12 @@ Use `-WhatIf` to see what would change without changing anything.
   "scope": "Site",
   "sequence": 0,
   "properties": {
+    "headerMenu": {
+      "siteUrl": "https://mmcbpm.sharepoint.com",
+      "libraryTitle": "Header Menu",
+      "fileName": "header-menu.json",
+      "cacheExpiryMinutes": 60
+    },
     "stockTicker": {
       "siteUrl": "https://mmcbpm.sharepoint.com",
       "listTitle": "Stock Ticker"

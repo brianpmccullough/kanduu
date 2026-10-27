@@ -45,7 +45,7 @@ const menu = await cache.getOrLoad('headerMenu:<source>', () => readMenu(), 30);
 ```
 
 - **Prefix**: every key is stored as `<prefix><key>` (default `kanduu:`), so the solution's entries sit together in the browser's storage view, and `clear()` / `purgeExpired()` touch only them.  Use another prefix for data that should be cleared separately.
-- **Envelope**: each value is stored as `{ "value": ..., "expires": <ms since epoch> }`.  Expired or unreadable entries are removed when read; `purgeExpired()` sweeps them all.
+- **Envelope**: each value is stored as `{ "value": ..., "expires": <ms since epoch> }`.  Expired or unreadable entries are removed when read; `purgeExpired()` sweeps them all (the header does this at startup).
 - **Expiry**: 60 minutes by default (`defaultExpiryMinutes`), or per call.  `0` or less stores nothing.  Choose it per data: how stale can it be before someone notices?
 - **Failure is a miss**: storage can be missing (no browser, private windows, blocked site data), full or throw.  The cache never throws; it acts empty.  When storage is full it purges expired entries and retries once.  Failed loads and `undefined` are not cached.
 - **What to cache**: data that is the same for everyone who uses the browser, or keyed by user.  Values must survive JSON.  Don't cache secrets or tokens: `localStorage` is readable by any script on the SharePoint origin.

@@ -13,6 +13,11 @@ import {
 } from '@microsoft/sp-component-base';
 
 import {
+  BrowserStorageCache,
+  getBrowserStorage,
+  HeaderMenuService,
+  type IHeaderMenuService,
+  type IHeaderMenuServiceOptions,
   type IStockQuoteService,
   type IStockQuoteServiceOptions,
   type IUserLinksService,
@@ -29,6 +34,11 @@ const LOG_SOURCE: string = 'HeaderApplicationCustomizer';
 
 /** ClientSideComponentProperties for the header (set in /scripts/config/header.*.json). */
 export interface IHeaderApplicationCustomizerProperties {
+  /**
+   * Menu JSON location (defaults to header-menu.json in the "Header Menu" library on the current site)
+   * and how long browsers cache it.
+   */
+  headerMenu?: IHeaderMenuServiceOptions;
   /** Stock ticker list location; defaults to the "Stock Ticker" list on the current site. */
   stockTicker?: IStockQuoteServiceOptions;
 }
@@ -40,6 +50,7 @@ export default class HeaderApplicationCustomizer
   private _topPlaceholder: PlaceholderContent | undefined;
   private _themeProvider: ThemeProvider | undefined;
   private _theme: IReadonlyTheme | undefined;
+  private _headerMenuService!: IHeaderMenuService;
   private _stockQuoteService!: IStockQuoteService;
   private _userLinksService!: IUserLinksService;
 
@@ -50,6 +61,10 @@ export default class HeaderApplicationCustomizer
     this._theme = this._themeProvider.tryGetTheme();
     this._themeProvider.themeChangedEvent.add(this, this._onThemeChanged);
 
+    // One cache for the extension's data; entries share the "kanduu:" prefix in localStorage.
+    const cache = new BrowserStorageCache(getBrowserStorage('local'));
+    cache.purgeExpired();
+    this._headerMenuService = new HeaderMenuService(this.context, this.properties.headerMenu, cache);
     this._stockQuoteService = new StockQuoteService(this.context, this.properties.stockTicker);
     // Sample links until users can personalize them (stored per user in OneDrive).
     this._userLinksService = new StaticUserLinksService(getSampleUserLinks());
@@ -89,6 +104,8 @@ export default class HeaderApplicationCustomizer
       userDisplayName: user.displayName,
       userEmail: user.email,
       locale: cultureInfo.currentCultureName,
+      uiLocale: cultureInfo.currentUICultureName,
+      headerMenuService: this._headerMenuService,
       stockQuoteService: this._stockQuoteService,
       userLinksService: this._userLinksService
     });

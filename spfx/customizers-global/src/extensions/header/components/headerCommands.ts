@@ -2,40 +2,30 @@ import {
   ContextualMenuItemType,
   type IButtonStyles,
   type ICommandBarItemProps,
-  type IContextualMenuItem
+  type IContextualMenuItem,
+  type IIconProps
 } from '@fluentui/react';
-
-/** A destination in a header menu, or a submenu when it has sections. */
-export interface IHeaderMenuLink {
-  key: string;
-  text: string;
-  iconName?: string;
-  /** Where the link goes.  Omitted for stubs, which do nothing yet. */
-  href?: string;
-  /** Open the link in a new tab (e.g. external sites). */
-  openInNewTab?: boolean;
-  /** Groups of links shown in a submenu. */
-  sections?: IHeaderMenuSection[];
-}
-
-/** A group of links in a header menu, with an optional heading. */
-export interface IHeaderMenuSection {
-  key: string;
-  title?: string;
-  links: IHeaderMenuLink[];
-}
+import type { IHeaderMenuLink, IHeaderMenuSection } from '@kanduu/spfx-shared';
 
 /** A top-level header command: a link, or a menu when it has sections. */
 export type IHeaderCommand = IHeaderMenuLink;
 
-function toMenuItem({ key, text, iconName, href, openInNewTab, sections }: IHeaderMenuLink): IContextualMenuItem {
+/** A custom image in place of an icon; decorative, since the item's text names it. */
+function toIconProps(iconName: string | undefined, image: string | undefined): IIconProps | undefined {
+  if (image) {
+    return { imageProps: { src: image, alt: '', width: 16, height: 16 } };
+  }
+  return iconName ? { iconName } : undefined;
+}
+
+function toMenuItem({ key, text, iconName, image, href, openInNewTab, sections }: IHeaderMenuLink): IContextualMenuItem {
   return {
     key,
     text,
     href,
     target: openInNewTab ? '_blank' : undefined,
     rel: openInNewTab ? 'noopener noreferrer' : undefined,
-    iconProps: iconName ? { iconName } : undefined,
+    iconProps: toIconProps(iconName, image),
     subMenuProps: sections?.length ? { items: sections.map(toSectionItem) } : undefined
   };
 }
