@@ -48,10 +48,11 @@ npm run customizers-global:start
 ## Deploying
 
 1. Build, then upload `spfx/<package>/sharepoint/solution/<package>.sppkg` to the tenant App Catalog and make it available to all sites.
-2. Create the header's Stock Ticker list on the root site, which hosts shared lists:
+2. Create the header's Stock Ticker list and Header Menu library on the root site, which hosts shared lists:
 
    ```powershell
    ./scripts/Set-StockTickerList.ps1 -SiteUrl https://<tenant>.sharepoint.com
+   ./scripts/Set-HeaderMenu.ps1 -SiteUrl https://<tenant>.sharepoint.com
    ```
 
 3. Activate application customizers per site with PnP.PowerShell:
