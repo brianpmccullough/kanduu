@@ -8,8 +8,8 @@ export interface IHeaderBannerProps {
   userEmail: string;
   /** Culture for number and date formatting, e.g. "en-US". */
   locale: string | undefined;
-  /** UI language for menu text, e.g. "fr-FR". */
-  uiLocale: string | undefined;
+  /** Languages for menu text in preference order, e.g. ["fr", "en-US"] (the page's, then the user's). */
+  menuLocales: string[];
   /** Commands shown in the banner. */
   headerMenuService: IHeaderMenuService;
   stockQuoteService: IStockQuoteService;

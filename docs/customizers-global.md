@@ -150,7 +150,13 @@ Create the library and upload the menu (supports `-WhatIf`):
 | link `openInNewTab` | `true` opens the link in a new tab (`rel="noopener noreferrer"`) |
 | link `sections` | Makes the link a menu (or a nested submenu).  Each section is a group of `links` with an optional `title`; sections after the first get a divider. |
 
-**Translations.**  Text is chosen with the user's SharePoint UI language (`pageContext.cultureInfo.currentUICultureName`): an exact match (`fr-CA`), then the language (`fr`), then another region of the language (`fr-FR`), then `default`.  Keys are case-insensitive.  A plain string is used for every language.  This menu text is the only user-facing text kept outside the `loc/` files, because it belongs to the menu, not the code.
+**Translations.**  Text follows the page first, then the user:
+
+1. **The page's language.**  A translated page on a multilingual site lives in a Site Pages folder named for its language (`SitePages/fr/Home.aspx`), so the header reads it from the URL (`getPageTranslationLanguage`, adapted from the "page" mode of the [PnP react-custom-localization sample](https://github.com/pnp/sp-dev-fx-webparts/tree/main/samples/react-custom-localization)).  It is checked again on every in-page navigation.
+2. **The user's SharePoint UI language** (`pageContext.cultureInfo.currentUICultureName`), from their Microsoft 365 language setting.
+3. `default`.
+
+For each language it tries an exact match (`fr-CA`), then the language (`fr`), then another region of the language (`fr-FR`), and moves to the next only when the menu has none of them.  So a normal folder that looks like a language code (`SitePages/hr/` for Human Resources is also Croatian) changes nothing unless the menu has that translation.  Keys are case-insensitive.  A plain string is used for every language.  This menu text is the only user-facing text kept outside the `loc/` files, because it belongs to the menu, not the code.  The fixed header text (Search, Settings, ...) comes from `loc/` and follows the user's language, as SPFx loads it; only `en-us` exists today.
 
 Entries without a `key` or usable text are left out.  Items are styled with the banner's theme colors; their menus use the site theme.
 

@@ -46,11 +46,11 @@ export class HeaderMenuService implements IHeaderMenuService {
     this._cacheKey = `headerMenu:${siteUrl}|${this._libraryTitle}|${this._fileName}`.toLowerCase();
   }
 
-  public async getCommands(locale: string | undefined): Promise<IHeaderMenuLink[]> {
+  public async getCommands(locales: readonly string[]): Promise<IHeaderMenuLink[]> {
     const menu: unknown = this._cache
       ? await this._cache.getOrLoad(this._cacheKey, () => this._readMenu(), this._options.cacheExpiryMinutes)
       : await this._readMenu();
-    return localizeHeaderMenu(menu, locale);
+    return localizeHeaderMenu(menu, locales);
   }
 
   private _readMenu(): Promise<unknown> {

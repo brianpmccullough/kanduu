@@ -33,17 +33,19 @@ registerBrandIcons();
  * SPFx site theme so any menus, panels and dialogs added here pick up the site theme.
  */
 const HeaderBanner: React.FC<IHeaderBannerProps> = ({
-  theme, userDisplayName, userEmail, locale, uiLocale, headerMenuService, stockQuoteService, userLinksService
+  theme, userDisplayName, userEmail, locale, menuLocales, headerMenuService, stockQuoteService, userLinksService
 }) => {
   const [commands, setCommands] = React.useState<IHeaderMenuLink[]>([]);
 
+  // Re-read only when the languages change (a new array arrives on every render).
+  const menuLocalesKey = menuLocales.join('|');
   React.useEffect(() => {
     let isMounted = true;
-    headerMenuService.getCommands(uiLocale)
+    headerMenuService.getCommands(menuLocalesKey.split('|').filter(Boolean))
       .then((result) => { if (isMounted) { setCommands(result); } })
       .catch((error: Error) => Log.warn(LOG_SOURCE, `Unable to load header menu: ${error.message}`));
     return () => { isMounted = false; };
-  }, [headerMenuService, uiLocale]);
+  }, [headerMenuService, menuLocalesKey]);
 
   const fluentTheme: ITheme = React.useMemo(
     () => createTheme(theme as IPartialTheme | undefined),

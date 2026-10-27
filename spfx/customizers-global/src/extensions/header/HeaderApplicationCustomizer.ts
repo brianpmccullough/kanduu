@@ -15,6 +15,7 @@ import {
 import {
   BrowserStorageCache,
   getBrowserStorage,
+  getPageTranslationLanguage,
   HeaderMenuService,
   type IHeaderMenuService,
   type IHeaderMenuServiceOptions,
@@ -70,6 +71,8 @@ export default class HeaderApplicationCustomizer
     this._userLinksService = new StaticUserLinksService(getSampleUserLinks());
 
     this.context.placeholderProvider.changedEvent.add(this, this._render);
+    // The header stays loaded across in-page navigation; each page can be a different translation.
+    this.context.application.navigatedEvent.add(this, this._render);
     this._render();
 
     return Promise.resolve();
@@ -77,6 +80,7 @@ export default class HeaderApplicationCustomizer
 
   public onDispose(): void {
     this._themeProvider?.themeChangedEvent.remove(this, this._onThemeChanged);
+    this.context.application.navigatedEvent.remove(this, this._render);
     this._unmount();
   }
 
@@ -99,12 +103,15 @@ export default class HeaderApplicationCustomizer
     }
 
     const { user, cultureInfo } = this.context.pageContext;
+    // Menu text: a translated page's language first, then the user's.
+    const pageLanguage = getPageTranslationLanguage(window.location.pathname);
+    const menuLocales = [pageLanguage, cultureInfo.currentUICultureName].filter((locale): locale is string => !!locale);
     const element: React.ReactElement<IHeaderBannerProps> = React.createElement(HeaderBanner, {
       theme: this._theme,
       userDisplayName: user.displayName,
       userEmail: user.email,
       locale: cultureInfo.currentCultureName,
-      uiLocale: cultureInfo.currentUICultureName,
+      menuLocales,
       headerMenuService: this._headerMenuService,
       stockQuoteService: this._stockQuoteService,
       userLinksService: this._userLinksService

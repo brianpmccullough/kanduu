@@ -11,10 +11,11 @@ function optionalString(value: unknown): string | undefined {
 }
 
 /**
- * Text for a locale: an exact match ("fr-ca"), then the language ("fr"), then another region of the
- * language ("fr-fr"), then "default".  Locale keys are case-insensitive.  Undefined when not usable text.
+ * Text for the first of the locales (in preference order) that has a translation, trying for each an
+ * exact match ("fr-ca"), then the language ("fr"), then another region of the language ("fr-fr");
+ * otherwise "default".  Locale keys are case-insensitive.  Undefined when not usable text.
  */
-export function resolveLocalizedText(text: LocalizedText | unknown, locale: string | undefined): string | undefined {
+export function resolveLocalizedText(text: LocalizedText | unknown, locales: readonly string[]): string | undefined {
   if (typeof text === 'string') {
     return text || undefined;
   }
@@ -30,31 +31,33 @@ export function resolveLocalizedText(text: LocalizedText | unknown, locale: stri
     }
   });
 
-  const requested = (locale ?? '').toLowerCase();
-  const language = requested.split('-')[0];
-  const sameLanguage = Array.from(translations.keys()).find((key) => language && key.startsWith(`${language}-`));
-
-  return (
-    translations.get(requested) ??
-    translations.get(language) ??
-    (sameLanguage ? translations.get(sameLanguage) : undefined) ??
-    translations.get('default')
-  );
+  for (const locale of locales) {
+    const requested = locale.toLowerCase();
+    const language = requested.split('-')[0];
+    const sameLanguage = Array.from(translations.keys()).find((key) => language && key.startsWith(`${language}-`));
+    const match = translations.get(requested) ??
+      translations.get(language) ??
+      (sameLanguage ? translations.get(sameLanguage) : undefined);
+    if (match) {
+      return match;
+    }
+  }
+  return translations.get('default');
 }
 
-function toSection(value: unknown, locale: string | undefined): IHeaderMenuSection | undefined {
+function toSection(value: unknown, locales: readonly string[]): IHeaderMenuSection | undefined {
   if (!isObject(value) || !optionalString(value.key) || !Array.isArray(value.links)) {
     return undefined;
   }
   return {
     key: value.key as string,
-    title: resolveLocalizedText(value.title, locale),
-    links: toLinks(value.links, locale)
+    title: resolveLocalizedText(value.title, locales),
+    links: toLinks(value.links, locales)
   };
 }
 
-function toLink(value: unknown, locale: string | undefined): IHeaderMenuLink | undefined {
-  const text = isObject(value) ? resolveLocalizedText(value.text, locale) : undefined;
+function toLink(value: unknown, locales: readonly string[]): IHeaderMenuLink | undefined {
+  const text = isObject(value) ? resolveLocalizedText(value.text, locales) : undefined;
   if (!isObject(value) || !optionalString(value.key) || !text) {
     return undefined;
   }
@@ -62,7 +65,7 @@ function toLink(value: unknown, locale: string | undefined): IHeaderMenuLink | u
   const image = optionalString(value.image);
   const sections = Array.isArray(value.sections)
     ? value.sections
-      .map((section) => toSection(section, locale))
+      .map((section) => toSection(section, locales))
       .filter((section): section is IHeaderMenuSection => !!section)
     : [];
 
@@ -77,17 +80,18 @@ function toLink(value: unknown, locale: string | undefined): IHeaderMenuLink | u
   };
 }
 
-function toLinks(values: unknown[], locale: string | undefined): IHeaderMenuLink[] {
+function toLinks(values: unknown[], locales: readonly string[]): IHeaderMenuLink[] {
   return values
-    .map((value) => toLink(value, locale))
+    .map((value) => toLink(value, locales))
     .filter((link): link is IHeaderMenuLink => !!link);
 }
 
 /**
- * Header commands from menu JSON (IHeaderMenuDefinition), with text for the locale.  The JSON is edited
+ * Header commands from menu JSON (IHeaderMenuDefinition), with text for the first of the locales
+ * (in preference order) that has a translation.  The JSON is edited
  * by hand, so it is checked as it is read: entries without a key or text are left out, and images that
  * are not base64 image data URIs are ignored.
  */
-export function localizeHeaderMenu(menu: unknown, locale: string | undefined): IHeaderMenuLink[] {
-  return isObject(menu) && Array.isArray(menu.commands) ? toLinks(menu.commands, locale) : [];
+export function localizeHeaderMenu(menu: unknown, locales: readonly string[]): IHeaderMenuLink[] {
+  return isObject(menu) && Array.isArray(menu.commands) ? toLinks(menu.commands, locales) : [];
 }
