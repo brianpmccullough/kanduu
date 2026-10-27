@@ -2,6 +2,7 @@ define([], function() {
   return {
     "Title": "HeaderApplicationCustomizer",
     "BannerAriaLabel": "Site header",
+    "LogoText": "Kanduu",
     "ActionsAriaLabel": "Header actions",
     "MoreCommandsAriaLabel": "More commands",
     "CommandIWantTo": "I want to...",

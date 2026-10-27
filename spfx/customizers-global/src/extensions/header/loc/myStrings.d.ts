@@ -1,6 +1,7 @@
 declare interface IHeaderApplicationCustomizerStrings {
   Title: string;
   BannerAriaLabel: string;
+  LogoText: string;
   ActionsAriaLabel: string;
   MoreCommandsAriaLabel: string;
   CommandIWantTo: string;

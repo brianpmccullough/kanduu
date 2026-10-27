@@ -17,6 +17,7 @@ import { registerBrandIcons } from './brandIcons';
 import { getDefaultHeaderCommands } from './defaultHeaderCommands';
 import styles from './HeaderBanner.module.scss';
 import { toCommandBarItems } from './headerCommands';
+import HeaderLogo from './HeaderLogo';
 import type { IHeaderBannerProps } from './IHeaderBannerProps';
 import ProfileButton from './ProfileButton';
 import StockTicker from './StockTicker';
@@ -72,6 +73,7 @@ const HeaderBanner: React.FC<IHeaderBannerProps> = ({
   return (
     <ThemeProvider theme={fluentTheme}>
       <header className={styles.headerBanner} style={bannerStyle} aria-label={strings.BannerAriaLabel}>
+        <HeaderLogo />
         <div className={styles.actions}>
           <CommandBar
             items={commandItems}

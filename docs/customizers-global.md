@@ -21,6 +21,8 @@ Renders a banner in the page's **Top** placeholder, colored with the site's prim
 | --- | --- |
 | `HeaderApplicationCustomizer.ts` | Thin host: reads the SPFx theme, creates the Top placeholder, renders `HeaderBanner`, re-renders on theme / placeholder change |
 | `components/HeaderBanner.tsx` | Banner layout; wraps everything in a Fluent `ThemeProvider` built from the SPFx theme |
+| `components/HeaderLogo.tsx` | Logo at the far left: the Kanduu mark and name.  See [Logo](#logo) |
+| `assets/` | Logo images (`kanduu-mark.png`, cut from the `Kanduu-Logo.png` source artwork) |
 | `components/StockTicker.tsx` | First quote from the Stock Ticker list; see [Stock ticker](#stock-ticker) |
 | `components/stockTickerFormat.ts` | Locale-aware price, percent and date formatting |
 | `components/headerCommands.ts` | Command model (`IHeaderCommand` → sections → links) and `toCommandBarItems`, which maps it to Fluent `CommandBar` items |
@@ -30,7 +32,7 @@ Renders a banner in the page's **Top** placeholder, colored with the site's prim
 | `components/ProfileCard.tsx` | Popup contents: the user's name and email, their quick link tiles and a Manage button |
 | `components/sampleUserLinks.ts` | Sample quick links until users can personalize them |
 
-Layout: commands (`CommandBar`) on the left, then on the right a stock ticker, a search box, the profile and a settings (gear) button.  The search box and gear are stubs with no behavior yet; the gear sits last so it can later be shown only to site owners or admins without shifting the other items.  The ticker is hidden below 640px; commands that don't fit move to the CommandBar's overflow ("More commands") menu.
+Layout: the logo on the far left, then commands (`CommandBar`), then on the right a stock ticker, a search box, the profile and a settings (gear) button.  The search box and gear are stubs with no behavior yet; the gear sits last so it can later be shown only to site owners or admins without shifting the other items.  The ticker and the logo name are hidden below 640px; commands that don't fit move to the CommandBar's overflow ("More commands") menu.
 
 ### Properties
 
@@ -95,6 +97,15 @@ The Fluent MDL2 icon font has no YouTube, Facebook, Instagram or X logos, so `br
 - The paths come from [Simple Icons](https://simpleicons.org) (CC0).  The logos remain their owners' trademarks; use them only to link to those services.
 - They are single-color and drawn in `currentColor`, so they take the theme's icon color, like the other icons.  Don't add brand colors (no custom colors).
 - The public website uses the MDL2 `Globe` icon.
+
+## Logo
+
+`HeaderLogo` shows, at the far left of the banner:
+
+- **The mark**: `assets/kanduu-mark.png`, the Kanduu "K" (Kanduu = "can do"; "duu" = double U, W for digital workplace).  It is a 64px crop of the `assets/Kanduu-Logo.png` source artwork, shown at 28px so it stays sharp on high-density screens.  It is the brand artwork, so it keeps its own colors and white background, shown as a small rounded tile on the banner.  Its alt text is the `LogoText` string.
+- **The name**: the `LogoText` string ("Kanduu") as text in the banner's text color and theme font.  It is `aria-hidden`, since the mark already gives the name, and is hidden below 640px wide.
+
+Images are imported as modules (`import url from '../assets/x.png'`; types in `src/images.d.ts`).  SPFx bundles them as separate files with hashed names, deployed with the package.  To change the mark, cut a new small PNG from the source artwork (e.g. `sips --cropToHeightWidth` then `sips -z 64 64`) rather than importing the large source file.
 
 ## Profile popup
 
