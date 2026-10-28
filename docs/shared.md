@@ -32,6 +32,7 @@ Plain TypeScript shared by the SPFx packages: models, service interfaces and imp
 | --- | --- |
 | `src/headerMenu` | `IHeaderMenuDefinition` (the menu JSON) and `IHeaderMenuLink` (localized), `IHeaderMenuService`, `HeaderMenuService` (PnPJS, reads the menu JSON from a document library), `localizeHeaderMenu` / `resolveLocalizedText` (picks text for the first of several locales, in preference order, and drops invalid entries).  Caches the JSON when given an `IStorageCache`. |
 | `src/localization` | `getPageTranslationLanguage`: the language folder of a translated page (`SitePages/fr/Home.aspx` → `fr`), for content that should follow the page's language rather than the user's |
+| `src/page` | `SharePointPage`: a page described by its URL.  `search` says whether it is a search results page (`.../_layouts/15/search.aspx`, any site) and gives its `query` (`q`) and `vertical` (`search.aspx/siteall` → `siteall`) |
 | `src/stockQuote` | `IStockQuote`, `IStockQuoteService`, `StockQuoteService` (PnPJS, reads the Stock Ticker list), `getStockQuoteChange` |
 | `src/storage` | `IStorageCache` and `BrowserStorageCache`: an expiring cache over `localStorage` / `sessionStorage` (see [Browser storage cache](#browser-storage-cache)); `getBrowserStorage` |
 | `src/userLinks` | `IUserLink`, `IUserLinksService`, `StaticUserLinksService` (fixed sample quick links, each with an optional icon, until links are stored per user in OneDrive) |
