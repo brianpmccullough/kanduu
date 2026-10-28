@@ -19,7 +19,7 @@ Renders a banner in the page's **Top** placeholder, colored with the site's prim
 
 | File | Role |
 | --- | --- |
-| `HeaderApplicationCustomizer.ts` | Thin host: reads the SPFx theme, creates the Top placeholder, renders `HeaderBanner`, re-renders on theme / placeholder change |
+| `HeaderApplicationCustomizer.ts` | Thin host: reads the SPFx theme, creates the Top placeholder, renders `HeaderBanner`, re-renders on theme / placeholder change and after each page change (`PageWatcher`) |
 | `components/HeaderBanner.tsx` | Banner layout; wraps everything in a Fluent `ThemeProvider` built from the SPFx theme |
 | `components/HeaderLogo.tsx` | Logo at the far left: the Kanduu mark and name.  See [Logo](#logo) |
 | `assets/` | Logo images (`kanduu-mark.png`, cut from the `Kanduu-Logo.png` source artwork) |
@@ -58,6 +58,17 @@ Layout: the logo on the far left, then commands (`CommandBar`), then on the righ
   }
 }
 ```
+
+### Search (`src/extensions/search`)
+
+Shows a custom search panel (90% of the viewport width, non-blocking) on SharePoint search results pages.  On other pages it renders nothing.
+
+| File | Role |
+| --- | --- |
+| `SearchApplicationCustomizer.ts` | Thin host: on start, after each page change (`PageWatcher.changedEvent`, which includes search query and tab changes) and on theme change, reads the current `SharePointPage` (`@kanduu/spfx-shared`) and renders `SearchPanel` into the Bottom placeholder when `search.isSearchPage` |
+| `components/SearchPanel.tsx` | Fluent `Panel` in a `ThemeProvider` built from the SPFx theme; opens again when the query or vertical changes.  Placeholder content ("Custom search") for now |
+
+The panel is rendered into the **Bottom** placeholder (the `Panel` itself draws in a layer over the page).  If the page has no Bottom placeholder, it logs a warning and shows nothing.  It has no properties yet.
 
 ## Stock ticker
 
@@ -152,7 +163,7 @@ Create the library and upload the menu (supports `-WhatIf`):
 
 **Translations.**  Text follows the page first, then the user:
 
-1. **The page's language.**  A translated page on a multilingual site lives in a Site Pages folder named for its language (`SitePages/fr/Home.aspx`), so the header reads it from the URL (`getPageTranslationLanguage`, adapted from the "page" mode of the [PnP react-custom-localization sample](https://github.com/pnp/sp-dev-fx-webparts/tree/main/samples/react-custom-localization)).  It is checked again on every in-page navigation.
+1. **The page's language.**  A translated page on a multilingual site lives in a Site Pages folder named for its language (`SitePages/fr/Home.aspx`), so the header reads it from the URL (`getPageTranslationLanguage`, adapted from the "page" mode of the [PnP react-custom-localization sample](https://github.com/pnp/sp-dev-fx-webparts/tree/main/samples/react-custom-localization)).  It is checked again after every page change (`PageWatcher`).
 2. **The user's SharePoint UI language** (`pageContext.cultureInfo.currentUICultureName`), from their Microsoft 365 language setting.
 3. `default`.
 

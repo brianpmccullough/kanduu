@@ -32,9 +32,30 @@ Plain TypeScript shared by the SPFx packages: models, service interfaces and imp
 | --- | --- |
 | `src/headerMenu` | `IHeaderMenuDefinition` (the menu JSON) and `IHeaderMenuLink` (localized), `IHeaderMenuService`, `HeaderMenuService` (PnPJS, reads the menu JSON from a document library), `localizeHeaderMenu` / `resolveLocalizedText` (picks text for the first of several locales, in preference order, and drops invalid entries).  Caches the JSON when given an `IStorageCache`. |
 | `src/localization` | `getPageTranslationLanguage`: the language folder of a translated page (`SitePages/fr/Home.aspx` → `fr`), for content that should follow the page's language rather than the user's |
+| `src/page` | `PageWatcher`: raises `changedEvent` after every page change, including the ones SPFx's `navigatedEvent` misses (see [Page changes](#page-changes)).  `SharePointPage`: a page described by its URL.  `search` says whether it is a search results page (`.../_layouts/15/search.aspx`, any site) and gives its `query` (`q`) and `vertical` (`search.aspx/siteall` → `siteall`) |
 | `src/stockQuote` | `IStockQuote`, `IStockQuoteService`, `StockQuoteService` (PnPJS, reads the Stock Ticker list), `getStockQuoteChange` |
 | `src/storage` | `IStorageCache` and `BrowserStorageCache`: an expiring cache over `localStorage` / `sessionStorage` (see [Browser storage cache](#browser-storage-cache)); `getBrowserStorage` |
 | `src/userLinks` | `IUserLink`, `IUserLinksService`, `StaticUserLinksService` (fixed sample quick links, each with an optional icon, until links are stored per user in OneDrive) |
+
+## Page changes
+
+SPFx's `navigatedEvent` doesn't fire for every page change: search query and tab changes on `search.aspx`, creating a page (`newpage.aspx?Mode=Edit`), and it can fire before the new page is ready.  `PageWatcher` watches the URL instead, and is used like an SPFx event source:
+
+```ts
+// onInit
+this._pageWatcher = new PageWatcher({ navigatedEvent: this.context.application.navigatedEvent });
+this._pageWatcher.changedEvent.add(this, this._render);
+
+// onDispose
+this._pageWatcher?.changedEvent.remove(this, this._render);
+this._pageWatcher?.dispose();
+```
+
+- **Event**: `changedEvent.add(observer, handler)` / `.remove(observer, handler)`, like `placeholderProvider.changedEvent`.  Handlers run with `observer` as `this` and get `PageChangedEventArgs` (`args.page` is a `SharePointPage`), like `ThemeChangedEventArgs`.  `watcher.page` is the current page.
+- **Sources**: the browser's Navigation API (`navigation`, `currententrychange`) where available; otherwise `pushState` / `replaceState` (wrapped once per window, so several extensions never stack wrappers) and `popstate`.  Plus `navigatedEvent` when given.
+- **Settles first**: the event is raised once the URL has stayed the same for `delayMs` (250 by default), because SharePoint finishes updating the page after the URL changes.  Several events for one change raise it once.
+- **Only real changes**: an event that leaves the URL as it was (e.g. `navigatedEvent` firing twice) is ignored.
+- **Dispose**: `dispose()` (like SPFx's `IDisposable`) removes every listener, the `navigatedEvent` subscription included.
 
 ## Browser storage cache
 

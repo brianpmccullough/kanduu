@@ -22,6 +22,7 @@ import {
   type IStockQuoteService,
   type IStockQuoteServiceOptions,
   type IUserLinksService,
+  PageWatcher,
   StaticUserLinksService,
   StockQuoteService
 } from '@kanduu/spfx-shared';
@@ -50,6 +51,7 @@ export default class HeaderApplicationCustomizer
 
   private _topPlaceholder: PlaceholderContent | undefined;
   private _themeProvider: ThemeProvider | undefined;
+  private _pageWatcher: PageWatcher | undefined;
   private _theme: IReadonlyTheme | undefined;
   private _headerMenuService!: IHeaderMenuService;
   private _stockQuoteService!: IStockQuoteService;
@@ -71,8 +73,10 @@ export default class HeaderApplicationCustomizer
     this._userLinksService = new StaticUserLinksService(getSampleUserLinks());
 
     this.context.placeholderProvider.changedEvent.add(this, this._render);
-    // The header stays loaded across in-page navigation; each page can be a different translation.
-    this.context.application.navigatedEvent.add(this, this._render);
+    // The header stays loaded across page changes, and each page can be a different translation.
+    // navigatedEvent misses some page changes (search queries, new pages), so watch the URL too.
+    this._pageWatcher = new PageWatcher({ navigatedEvent: this.context.application.navigatedEvent });
+    this._pageWatcher.changedEvent.add(this, this._render);
     this._render();
 
     return Promise.resolve();
@@ -80,7 +84,9 @@ export default class HeaderApplicationCustomizer
 
   public onDispose(): void {
     this._themeProvider?.themeChangedEvent.remove(this, this._onThemeChanged);
-    this.context.application.navigatedEvent.remove(this, this._render);
+    this.context.placeholderProvider.changedEvent.remove(this, this._render);
+    this._pageWatcher?.changedEvent.remove(this, this._render);
+    this._pageWatcher?.dispose();
     this._unmount();
   }
 

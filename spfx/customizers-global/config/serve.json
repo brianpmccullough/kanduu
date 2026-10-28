@@ -20,6 +20,10 @@
               "listTitle": "Stock Ticker"
             }
           }
+        },
+        "f7f59b8a-b02e-45dd-8d4e-903c9266c36b": {
+          "location": "ClientSideExtension.ApplicationCustomizer",
+          "properties": {}
         }
       }
     },
@@ -40,6 +44,15 @@
               "listTitle": "Stock Ticker"
             }
           }
+        }
+      }
+    },
+    "search": {
+      "pageUrl": "https://{tenantDomain}/SitePages/myPage.aspx",
+      "customActions": {
+        "f7f59b8a-b02e-45dd-8d4e-903c9266c36b": {
+          "location": "ClientSideExtension.ApplicationCustomizer",
+          "properties": {}
         }
       }
     }
