@@ -19,7 +19,7 @@ Renders a banner in the page's **Top** placeholder, colored with the site's prim
 
 | File | Role |
 | --- | --- |
-| `HeaderApplicationCustomizer.ts` | Thin host: reads the SPFx theme, creates the Top placeholder, renders `HeaderBanner`, re-renders on theme / placeholder change |
+| `HeaderApplicationCustomizer.ts` | Thin host: reads the SPFx theme, creates the Top placeholder, renders `HeaderBanner`, re-renders on theme / placeholder change and after each page change (`PageWatcher`) |
 | `components/HeaderBanner.tsx` | Banner layout; wraps everything in a Fluent `ThemeProvider` built from the SPFx theme |
 | `components/HeaderLogo.tsx` | Logo at the far left: the Kanduu mark and name.  See [Logo](#logo) |
 | `assets/` | Logo images (`kanduu-mark.png`, cut from the `Kanduu-Logo.png` source artwork) |
@@ -163,7 +163,7 @@ Create the library and upload the menu (supports `-WhatIf`):
 
 **Translations.**  Text follows the page first, then the user:
 
-1. **The page's language.**  A translated page on a multilingual site lives in a Site Pages folder named for its language (`SitePages/fr/Home.aspx`), so the header reads it from the URL (`getPageTranslationLanguage`, adapted from the "page" mode of the [PnP react-custom-localization sample](https://github.com/pnp/sp-dev-fx-webparts/tree/main/samples/react-custom-localization)).  It is checked again on every in-page navigation.
+1. **The page's language.**  A translated page on a multilingual site lives in a Site Pages folder named for its language (`SitePages/fr/Home.aspx`), so the header reads it from the URL (`getPageTranslationLanguage`, adapted from the "page" mode of the [PnP react-custom-localization sample](https://github.com/pnp/sp-dev-fx-webparts/tree/main/samples/react-custom-localization)).  It is checked again after every page change (`PageWatcher`).
 2. **The user's SharePoint UI language** (`pageContext.cultureInfo.currentUICultureName`), from their Microsoft 365 language setting.
 3. `default`.
 
