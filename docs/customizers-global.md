@@ -59,6 +59,17 @@ Layout: the logo on the far left, then commands (`CommandBar`), then on the righ
 }
 ```
 
+### Search (`src/extensions/search`)
+
+Shows a custom search panel (90% of the viewport width, non-blocking) on SharePoint search results pages.  On other pages it renders nothing.
+
+| File | Role |
+| --- | --- |
+| `SearchApplicationCustomizer.ts` | Thin host: on start, after each page change (`PageWatcher.changedEvent`, which includes search query and tab changes) and on theme change, reads the current `SharePointPage` (`@kanduu/spfx-shared`) and renders `SearchPanel` into the Bottom placeholder when `search.isSearchPage` |
+| `components/SearchPanel.tsx` | Fluent `Panel` in a `ThemeProvider` built from the SPFx theme; opens again when the query or vertical changes.  Placeholder content ("Custom search") for now |
+
+The panel is rendered into the **Bottom** placeholder (the `Panel` itself draws in a layer over the page).  If the page has no Bottom placeholder, it logs a warning and shows nothing.  It has no properties yet.
+
 ## Stock ticker
 
 The ticker shows the **first item (lowest ID)** of the Stock Ticker list: the ticker, the current price and a direction indicator.  Hovering or focusing it shows the percent change since the last close and when the price was last updated, in the user's locale.  It reads the list once per page load through `StockQuoteService` (`@kanduu/spfx-shared`, PnPJS).  `getStockQuoteChange`, also in shared, works out the direction and percent change.
